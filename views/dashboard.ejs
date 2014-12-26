@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= title %></title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+<link rel='stylesheet' href='/stylesheets/stickHeaderComponent.css' />
+</head>
+
+<body>
+    <% var page %>
+    <% include /nav %>
+    <div class="container">
+      <% if (id !== '') { %>
+        <p class="updated lead text-center">Product <strong><%= id %></strong> was <%= action %>.</p>
+      <% } %>
+
+      <% include /statPanels %>
+
+      <table class="isortope">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th class="store-head" data-view="allstores"><a href="">Store</th>
+            <th class="title-head" data-view="alltitles"><a href="">Title</th>
+            <th class="store-price-head" data-view="allstoreprices"><a href="">Store Price</th>
+            <th class="my-price-head" data-view="allmyprices"><a href="">My Price</th>
+            <th class="min-profit-head" data-view="allminprofits"><a href="">Min Profit</th>
+            <th class="instock-head" data-view="allinstock"><a href="">Instock</th>
+            <th class="profit-head" data-view="allprofit"><a href="">Profit</th>
+            <% if(manage) { %>
+              <th class="delete-head" data-view="<%= page %>"><a href="">
+                <form action="/delete?page=<%= page %>?ids=">
+                  <button type="submit" class="btn btn-default">Delete</button>
+                </form>
+              </th>
+            <% } %>
+          </tr>
+        </thead>
+        <tbody>
+
+          <% var count,pTitle,instock,profit; %>
+          <% for ( var i = 0 ; i < products.length; i++) { %>
+
+            <%
+            count = parseInt(i) + 1;
+            pTitle = String(products[i].title).substring(0,15);
+            instock = Boolean(products[i].instock) ? 'fa fa-check' : 'fa fa-exclamation-triangle';
+            profit = Boolean(products[i].profit) ? 'fa fa-check' : 'fa fa-exclamation-triangle';
+            %>
+
+            <tr
+            id="<%= products[i]._id %>"
+            class="p-row"
+            data-count="<%= count %>"
+            data-data='{
+              "image"        : "<%= products[i].image %>",
+              "storePrice"   : "<%= products[i].store_price %>",
+              "myPrice"      : "<%= products[i].my_price %>",
+              "description"  : "<%= products[i].description %>",
+              "title"        : "<%= products[i].title %>",
+              "id"           : "<%= products[i]._id %>",
+              "minProfit"    : "<%= products[i].min_profit %>",
+              "storeName"    : "<%= products[i].store_name %>",
+              "storeID"      : "<%= products[i].store_id %>",
+              "link"         : "<%= products[i].link %>"
+            }'
+            >
+            <td class="tble-data"><%= count %></td>
+            <td class="tble-data"><%= products[i].store_name %></td>
+            <td class="tble-data"><%= pTitle %></td>
+            <td class="tble-data"><%= products[i].store_price %></td>
+            <td class="tble-data"><%= products[i].my_price %></td>
+            <td class="tble-data"><%= products[i].min_profit %></td>
+            <td class="tble-data"><i class="<%= instock %>"></i></td>
+            <td class="tble-data"><i class="<%= profit %>"></i></td>
+            <% if(manage) { %>
+            <td class="select-row">
+                <input type="checkbox" name="chk" class="chk" >
+            </td>
+            <% } %>
+          </tr>
+          <% } %>
+        </tbody>
+      </table>
+      <div class="p-modal"></div>
+    </div> <!--end of container -->
+
+
+    <script language="javascript" type="text/javascript" src="/javascripts/jquery.js"></script>
+    <script language="javascript" type="text/javascript" src="/bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-throttle-debounce/1.1/jquery.ba-throttle-debounce.min.js"></script>
+
+    <script src="/javascripts/bundle.js"></script>
+
+    
+
+  </body>
+  </html>

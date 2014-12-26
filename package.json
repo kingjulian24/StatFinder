@@ -1,0 +1,34 @@
+{
+  "name": "StatFinder",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "body-parser": "~1.8.1",
+    "cookie-parser": "~1.3.3",
+    "cradle": "^0.6.9",
+    "debug": "~2.0.0",
+    "ejs": "~0.8.5",
+    "express": "~4.9.0",
+    "jq-html-parser": "^0.2.1",
+    "jquery": "^2.1.3",
+    "morgan": "~1.3.0",
+    "request": "^2.51.0",
+    "serve-favicon": "~2.1.3"
+  },
+  "description": "Web App that tracks retail product information",
+  "main": "app.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kingjulian24/StatFinder"
+  },
+  "author": "Julian Brown",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kingjulian24/StatFinder/issues"
+  },
+  "homepage": "https://github.com/kingjulian24/StatFinder"
+}

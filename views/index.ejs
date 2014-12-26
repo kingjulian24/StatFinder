@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <div class="container">
+      <h1><%= title %></h1>
+      <% if (id !== '') { %>
+        <p class="updated lead text-center">Product <strong><%= id %></strong> was updated.</p>
+        <% } %>
+      <form class="form-horizontal" action="/save?loc=save" method="post">
+        <fieldset>
+
+          <!-- Form Name -->
+          <legend>Add Product</legend>
+
+          <!-- Text input-->
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="id">Product ID</label>
+            <div class="col-md-4">
+              <input id="id" name="id" type="text" placeholder="Enter product id" class="form-control input-md" required="">
+
+            </div>
+          </div>
+
+          <!-- Select Basic -->
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="store">Store</label>
+            <div class="col-md-4">
+              <select id="store" name="store" class="form-control">
+                <option value="">Select</option>
+                <option value="hn">Hayneedle</option>
+                <option value="wm">Walmart</option>
+                <option value="wf">Wayfair</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Text input-->
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="price">Your Price</label>
+            <div class="col-md-4">
+              <input id="price" name="my-price" type="number" placeholder="Enter your price" class="form-control input-md" required="">
+
+            </div>
+          </div>
+
+          <!-- Text input-->
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="limit">Min Profit</label>
+            <div class="col-md-4">
+              <input id="min-profit" name="min-profit" type="text" placeholder="Enter minimum profit" class="form-control input-md" required="">
+
+            </div>
+          </div>
+
+          <!-- Button -->
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="submit"></label>
+            <div class="col-md-4">
+              <button id="submit" name="submit" class="btn btn-success">Submit</button>
+            </div>
+          </div>
+
+        </fieldset>
+      </form>
+    </div>
+    <script language="javascript" type="text/javascript" src="/javascripts/jquery.js"></script>
+    <script>
+    setTimeout(function(){
+      $('.updated').fadeOut();
+    },3000);
+    </script>
+  </body>
+</html>

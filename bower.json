@@ -1,0 +1,24 @@
+{
+  "name": "StatFinder",
+  "version": "0.0.0",
+  "authors": [
+    "Julian Brown <brownjulian2@gmail.com>"
+  ],
+  "description": "Web App that tracks retail product information",
+  "moduleType": [
+    "node"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap-table": "~1.5.0",
+    "bootstrap": "~3.3.1"
+  }
+}
