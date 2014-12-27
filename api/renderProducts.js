@@ -50,7 +50,7 @@ module.exports = function (req,res,view) {
       if(!products[i].value.profit) {
         profitLoss.push(products[i].value);
       }
-      if ( products[i].value.profit && products[i].value.profit ) {
+      if ( products[i].value.profit && products[i].value.instock ) {
         goodProducts.push(products[i].value);
       }
 
@@ -76,7 +76,7 @@ module.exports = function (req,res,view) {
           allCount : response.length,
           outOfStockCount: outOfStock.length,
           profitLossCount: profitLoss.length,
-          available: response.length - badproducts.length,
+          available: goodProducts.length,
           manage: manage
          
 
