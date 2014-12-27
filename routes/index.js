@@ -1,4 +1,5 @@
 var renderProducts = require('../api/renderProducts');
+var renderProductsDash = require('../api/renderProductsDash');
 var express        = require('express');
 var router         = express.Router();
 
@@ -9,7 +10,7 @@ router.get('/', function(req, res) {
 });
 
 router.get('/dash', function (req,res){
-  renderProducts(req,res, 'dash');
+  renderProductsDash(req,res, 'dash');
 });
 
 router.get('/dash/all', function (req,res){
