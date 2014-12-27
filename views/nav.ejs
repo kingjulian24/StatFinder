@@ -8,7 +8,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">StatFinder</a>
+      <a class="navbar-brand" href="/">StatFinder</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -18,14 +18,14 @@
           <% if(view === 'dash') { %>
           <% page ='dash' %>
             class="active"
-            data-page="dash"
+            data-page="<%= page %>"
           <% } %>
         ><a href="/dash">Dashboard <span class="sr-only">(current)</span></a></li>
         <li
           <% if(view === 'all') { %>
           <% page ='dash/all' %>
             class="active"
-            data-page="dash/all"
+            data-page="<%= page %>"
           <% } %>
         ><a href="/dash/all">All Products</a></li>
         <li class="dropdown">
