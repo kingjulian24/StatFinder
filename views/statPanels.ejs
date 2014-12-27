@@ -1,45 +1,89 @@
 <div class="row">
   
   <div class="col-lg-3 col-md-6">
-    <div class="panel panel-default">
-      <div class="panel-body">
-        Out Of Stock: <%= outOfStockCount %>
+    <div class="panel panel-danger">
+      <div class="panel-heading">
+          <div class="row">
+              <div class="col-xs-3">
+                  <i class="fa fa-warning fa-5x"></i>
+              </div>
+              <div class="col-xs-9 text-right">
+                  <div class="huge"><%= outOfStockCount %></div>
+                  <div>Out of Stock</div>
+              </div>
+          </div>
       </div>
-      <div class="panel-footer">Panel footer</div>
+       <div class="panel-footer">
+          <span class="pull-left">View Details</span>
+          <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+          <div class="clearfix"></div>
+      </div>
     </div>
-  </div>
+  </div> 
 
 
 
   <div class="col-lg-3 col-md-6">
-    <div class="panel panel-default">
-      <div class="panel-body">
-        Price Changed: <%= profitLossCount %>
+    <div class="panel panel-danger">
+      <div class="panel-heading">
+          <div class="row">
+              <div class="col-xs-3">
+                  <i class="fa fa-money fa-5x"></i>
+              </div>
+              <div class="col-xs-9 text-right">
+                  <div class="huge"><%= profitLossCount %></div>
+                  <div>Price Changed</div>
+              </div>
+          </div>
       </div>
-      <div class="panel-footer">Panel footer</div>
-    </div>
-  </div>
-
-
-
-  <div class="col-lg-3 col-md-6">
-    <div class="panel panel-default">
-      <div class="panel-body">
-        Products in Stock: <%= available %>
+       <div class="panel-footer">
+          <span class="pull-left">View Details</span>
+          <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+          <div class="clearfix"></div>
       </div>
-      <div class="panel-footer">Panel footer</div>
     </div>
-  </div>
+  </div> 
 
-
-
-  <div class="col-lg-3 col-md-6">
-    <div class="panel panel-default">
-      <div class="panel-body">
-        Total Products: <%= allCount %>
+   <div class="col-lg-3 col-md-6">
+    <div class="panel panel-success">
+      <div class="panel-heading">
+          <div class="row">
+              <div class="col-xs-3">
+                  <i class="fa fa-check fa-5x"></i>
+              </div>
+              <div class="col-xs-9 text-right">
+                  <div class="huge"><%= available %></div>
+                  <div>Good Products</div>
+              </div>
+          </div>
       </div>
-      <div class="panel-footer">Panel footer</div>
+       <div class="panel-footer">
+          <span class="pull-left">View Details</span>
+          <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+          <div class="clearfix"></div>
+      </div>
     </div>
-  </div>
+  </div> 
 
-</div>
+   <div class="col-lg-3 col-md-6">
+    <div class="panel panel-info">
+      <div class="panel-heading">
+          <div class="row">
+              <div class="col-xs-3">
+                  <i class="fa fa-shopping-cart fa-5x"></i>
+              </div>
+              <div class="col-xs-9 text-right">
+                  <div class="huge"><%= allCount %></div>
+                  <div>Total Products</div>
+              </div>
+          </div>
+      </div>
+       <div class="panel-footer">
+          <span class="pull-left">View Details</span>
+          <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+          <div class="clearfix"></div>
+      </div>
+    </div>
+  </div> 
+
+  </div>
