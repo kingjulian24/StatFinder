@@ -42,21 +42,12 @@ module.exports = function (req,res,view) {
 
     for (var i = 0; i < products.length; i++) {
       allProducts.push(products[i].value);
-      
-   
-
     }
-
- 
-
 
       var id     = req.param('id') || '';
       var action = req.param('action') || '';
-      
 
-      
-
-      var callback = function (data) {
+      stats.init( function (data) {
 
         res.render('dashboard.ejs',{
           products : allProducts,
@@ -69,15 +60,10 @@ module.exports = function (req,res,view) {
           profitLossCount: data.profitLoss.length,
           available: data.goodProducts.length,
           manage: manage
-         
-
         });
 
-     };
-     stats.init(callback);
-     
+     });
 
-      
     } else {
       console.log('failed to query view: '+ view);
       res.status(404).send('failed to query view: '+ view);
