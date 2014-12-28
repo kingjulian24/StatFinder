@@ -20,14 +20,13 @@ module.exports = function (req,res,view) {
     }
     
   } else {
-    
-    // sorted query 
+    //sort
+    var desc = req.param('desc');
 
-    dbView ='queries/'+ req.param('view');
+    dbView ='queries/dash'+ req.param('view');
     opts = {
-      descending: Boolean(req.param('desc'))
+      descending: desc
     };
-
   }
   
 
