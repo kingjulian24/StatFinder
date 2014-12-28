@@ -1,7 +1,7 @@
 var db = require('./db');
 
 
-module.exports = function (req,res,view) {
+module.exports = function (req,res, pageData) {
   var dbView ,
       opts,
       manage;
@@ -60,7 +60,7 @@ module.exports = function (req,res,view) {
       var badproducts = outOfStock.concat(profitLoss);
       var id     = req.param('id') || '';
       var action = req.param('action') || '';
-      var data   = (view === 'all') ? allProducts : badproducts;
+      var data   = (pageData.view === 'all') ? allProducts : badproducts;
 
   
 
@@ -70,12 +70,13 @@ module.exports = function (req,res,view) {
           products : data,
           title    : 'Dashboard',
           id       : id,
-          view     : view,
+          view     : pageData.view,
           action   : action,
           allCount : response.length,
           outOfStockCount: outOfStock.length,
           profitLossCount: profitLoss.length,
           available: goodProducts.length,
+          loggedIn        : pageData.loggedIn,
           manage: manage
          
 
@@ -85,8 +86,8 @@ module.exports = function (req,res,view) {
 
       
     } else {
-      console.log('failed to query view: '+ view);
-      res.status(404).send('failed to query view: '+ view);
+      console.log('failed to query view: '+ pageData.view);
+      res.status(404).send('failed to query view: '+ pageData.view);
     }
 
   });

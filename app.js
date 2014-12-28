@@ -1,3 +1,7 @@
+var passport = require('./auth');
+var secret = require('./api/secret');
+var flash = require('connect-flash');
+var session      = require('express-session');
 var express      = require('express');
 var path         = require('path');
 var logger       = require('morgan');
@@ -23,8 +27,27 @@ app.use(express.static(__dirname + '/public'));
 app.use('/bower_components',  express.static(__dirname + '/bower_components'));
 
 
+// required for passport
+
+app.use(session({
+  secret: secret.sessionSecret,
+  resave: false,
+  saveUninitialized: true
+}));
+
+app.use(flash());
+app.use(passport.initialize());
+app.use(passport.session());
+
 
 app.use('/', routes);
+
+app.post('/login',
+  passport.authenticate('local', { successRedirect: '/',
+                                   failureRedirect: '/login'
+
+                                   })
+);
 
 
 // catch 404 and forward to error handler

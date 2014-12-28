@@ -10,32 +10,57 @@ router.get('/', function(req, res) {
 });
 
 router.get('/dash', function (req,res){
-  renderProductsDash(req,res, 'dash');
+  if (req.session.passport.user !== undefined) {
+    renderProductsDash(req,res, {view: 'dash', loggedIn: true});
+  } else {
+    renderProductsDash(req,res, {view: 'dash', loggedIn: false});
+  }
 });
 
 router.get('/dash/all', function (req,res){
-  renderProducts(req,res, 'all');
+  if (req.session.passport.user !== undefined) {
+    renderProducts(req,res, {view: 'all', loggedIn: true});
+  } else {
+    renderProducts(req,res, {view: 'all', loggedIn: false});
+  }
 });
 
 router.post('/save', function(req,res){
-  var data = {
-    id        : req.param('id'),
-    storeName : req.param('store'),
-    minProfit : req.param('min-profit'),
-    myPrice   : req.param('my-price')
-  };
-  require('../api/'+data.storeName).crawl(data);
+  if (req.session.passport.user !== undefined) {
 
-  req.method = 'get';
-  res.redirect('/'+req.param('loc')+'?id='+data.id+'&action='+req.param('action'));
+    var data = {
+      id        : req.param('id'),
+      storeName : req.param('store'),
+      minProfit : req.param('min-profit'),
+      myPrice   : req.param('my-price')
+    };
+    require('../api/'+data.storeName).crawl(data);
 
+    req.method = 'get';
+    res.redirect('/'+req.param('loc')+'?id='+data.id+'&action='+req.param('action'));
 
+  } else {
+    res.redirect('/login');
+  }
+});
+
+router.get('/login', function(req, res){
+  res.render('login', { message: req.flash('loginMessage') });
+});
+
+router.get('/logout', function(req, res){
+  req.logout();
+  res.redirect('/');
 });
 
 
 router.post('/delete', function(req,res){
-  var id = req.param('id');
-  require('../api/delete')(id,req,res);
+  if (req.session.passport.user !== undefined) {
+    var id = req.param('id');
+    require('../api/delete')(id,req,res);
+  } else {
+    res.redirect('/login');
+  }
 });
 
 

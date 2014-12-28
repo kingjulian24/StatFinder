@@ -3,7 +3,7 @@ var stats = require('./getStats');
 
 
 
-module.exports = function (req,res,view) {
+module.exports = function (req,res, pageData) {
   var dbView ,
       opts,
       manage;
@@ -50,23 +50,24 @@ module.exports = function (req,res,view) {
       stats.init( function (data) {
 
         res.render('dashboard.ejs',{
-          products : allProducts,
-          title    : 'Dashboard',
-          id       : id,
-          view     : view,
-          action   : action,
-          allCount : data.allProducts.length,
-          outOfStockCount: data.outOfStock.length,
-          profitLossCount: data.profitLoss.length,
-          available: data.goodProducts.length,
-          manage: manage
+          products        : allProducts,
+          title           : 'Dashboard',
+          id              : id,
+          view            : pageData.view,
+          action          : action,
+          allCount        : data.allProducts.length,
+          outOfStockCount : data.outOfStock.length,
+          profitLossCount : data.profitLoss.length,
+          available       : data.goodProducts.length,
+          loggedIn        : pageData.loggedIn,
+          manage          : manage
         });
 
      });
 
     } else {
-      console.log('failed to query view: '+ view);
-      res.status(404).send('failed to query view: '+ view);
+      console.log('failed to query view: '+ pageData.view);
+      res.status(404).send('failed to query view: '+ pageData.view);
     }
 
   });
