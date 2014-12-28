@@ -8,9 +8,9 @@ module.exports = function (req,res,view) {
       opts,
       manage;
   
-  // query for default pages
+  
   if(req.param('view') ===  undefined){
-    
+    // display dash
     dbView ='queries/dash';
     opts = {
       descending: false
@@ -22,12 +22,12 @@ module.exports = function (req,res,view) {
     }
     
   } else {
-    
-    // sorted query 
+    //sort
+    var desc = req.param('desc');
 
     dbView ='queries/dash'+ req.param('view');
     opts = {
-      descending: Boolean(req.param('desc'))
+      descending: desc
     };
 
   }
