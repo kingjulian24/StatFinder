@@ -391,7 +391,6 @@ function addSortingLinks(data) {
 
   var desc = helpers.getParameterByName('desc');
   var view = helpers.getParameterByName('view');
-  console.log(desc);
   
   if(desc !== '') {
 
