@@ -2,7 +2,7 @@ var loc = require('./loc.js');
 var helpers = require('./helpers.js');
 
 function addSortingLinks(data) {
-	console.log(data);
+
   var desc = helpers.getParameterByName('desc');
   var view = helpers.getParameterByName('view');
   console.log(desc);
@@ -34,10 +34,9 @@ function addSortingLinks(data) {
   	
     $(data.header).attr('href','/'+loc+'?view='+data.view+'&desc=false').
     	append(' <i class="fa fa-sort"></i>');
-  
   }
 
-}
+} //if(desc !== '') {
 
 
 var addAllLinks = function () {
