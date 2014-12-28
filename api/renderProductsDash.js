@@ -25,7 +25,7 @@ module.exports = function (req,res,view) {
     //sort
     var desc = req.param('desc');
 
-    dbView ='queries/all'+ req.param('view');
+    dbView ='queries/dash'+ req.param('view');
     opts = {
       descending: desc
     };
