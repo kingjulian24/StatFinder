@@ -1,4 +1,4 @@
-(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({"/Users/julianbrown/Desktop/demo/public/javascripts/helpers.js":[function(require,module,exports){
+(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({"/Users/julianbrown/Desktop/StatFinder/public/javascripts/helpers.js":[function(require,module,exports){
 exports.getParameterByName = function (name) {
     name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
     var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
@@ -9,7 +9,7 @@ exports.getParameterByName = function (name) {
 
 
 							
-},{}],"/Users/julianbrown/Desktop/demo/public/javascripts/idCheck.js":[function(require,module,exports){
+},{}],"/Users/julianbrown/Desktop/StatFinder/public/javascripts/idCheck.js":[function(require,module,exports){
 function idCheck (id,store) {
 	
 	if (id.length === 8 && store === 'wm' ) {
@@ -27,7 +27,7 @@ function idCheck (id,store) {
 }
 
 module.exports = idCheck;
-},{}],"/Users/julianbrown/Desktop/demo/public/javascripts/layouts.js":[function(require,module,exports){
+},{}],"/Users/julianbrown/Desktop/StatFinder/public/javascripts/layouts.js":[function(require,module,exports){
 // new modal
 exports.blankModal = function (title){
   return '<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> <div class="modal-dialog"> <div class="modal-content"> <div class="modal-header"> <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> <h4 class="modal-title" id="myModalLabel">'+title+'</h4> </div><div class="modal-body"> </div><div class="modal-footer"> <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> </div></div></div></div>';
@@ -111,7 +111,7 @@ exports.productBodyModal = function (data) {
     return layout;
   };
 
-},{}],"/Users/julianbrown/Desktop/demo/public/javascripts/listeners.js":[function(require,module,exports){
+},{}],"/Users/julianbrown/Desktop/StatFinder/public/javascripts/listeners.js":[function(require,module,exports){
 /* global $: flase, confirm: false */
 var loc       = require('./loc.js');
 var layouts   = require('./layouts.js');
@@ -311,11 +311,11 @@ module.exports = {
 
 };
 
-},{"./idCheck.js":"/Users/julianbrown/Desktop/demo/public/javascripts/idCheck.js","./layouts.js":"/Users/julianbrown/Desktop/demo/public/javascripts/layouts.js","./loc.js":"/Users/julianbrown/Desktop/demo/public/javascripts/loc.js"}],"/Users/julianbrown/Desktop/demo/public/javascripts/loc.js":[function(require,module,exports){
+},{"./idCheck.js":"/Users/julianbrown/Desktop/StatFinder/public/javascripts/idCheck.js","./layouts.js":"/Users/julianbrown/Desktop/StatFinder/public/javascripts/layouts.js","./loc.js":"/Users/julianbrown/Desktop/StatFinder/public/javascripts/loc.js"}],"/Users/julianbrown/Desktop/StatFinder/public/javascripts/loc.js":[function(require,module,exports){
 
 module.exports = $('.active').data('page');
 
-},{}],"/Users/julianbrown/Desktop/demo/public/javascripts/main.js":[function(require,module,exports){
+},{}],"/Users/julianbrown/Desktop/StatFinder/public/javascripts/main.js":[function(require,module,exports){
 (function(){
   /* global $: flase */
   var listeners = require('./listeners.js');
@@ -348,7 +348,7 @@ setTimeout(function(){
 
 })(); // end of self invoking function
 
-},{"./listeners.js":"/Users/julianbrown/Desktop/demo/public/javascripts/listeners.js","./search.js":"/Users/julianbrown/Desktop/demo/public/javascripts/search.js","./sortTableHeaders.js":"/Users/julianbrown/Desktop/demo/public/javascripts/sortTableHeaders.js","./stickyHeader.js":"/Users/julianbrown/Desktop/demo/public/javascripts/stickyHeader.js"}],"/Users/julianbrown/Desktop/demo/public/javascripts/search.js":[function(require,module,exports){
+},{"./listeners.js":"/Users/julianbrown/Desktop/StatFinder/public/javascripts/listeners.js","./search.js":"/Users/julianbrown/Desktop/StatFinder/public/javascripts/search.js","./sortTableHeaders.js":"/Users/julianbrown/Desktop/StatFinder/public/javascripts/sortTableHeaders.js","./stickyHeader.js":"/Users/julianbrown/Desktop/StatFinder/public/javascripts/stickyHeader.js"}],"/Users/julianbrown/Desktop/StatFinder/public/javascripts/search.js":[function(require,module,exports){
 function resetSearch ($row, bgColor) {
 
   setTimeout(function() {
@@ -383,39 +383,48 @@ function search (){
 
 module.exports = search;
 
-},{}],"/Users/julianbrown/Desktop/demo/public/javascripts/sortTableHeaders.js":[function(require,module,exports){
+},{}],"/Users/julianbrown/Desktop/StatFinder/public/javascripts/sortTableHeaders.js":[function(require,module,exports){
 var loc = require('./loc.js');
 var helpers = require('./helpers.js');
 
 function addSortingLinks(data) {
 	console.log(data);
   var desc = helpers.getParameterByName('desc');
+  var view = helpers.getParameterByName('view');
+  console.log(desc);
   
-  if(desc !== undefined) {
+  if(desc !== '') {
 
     if(desc === 'true'){
-      $(data.header).attr('href','/'+loc+'?view='+data.view);
-    } else {
+      
+      $(data.header).attr('href','/'+loc+'?view='+data.view+'&desc=false');
+      
+      if( data.view === view ) {
+      	$(data.header).append(' <i class="fa fa-sort-desc"></i>');
+      } else {
+      	$(data.header).append(' <i class="fa fa-sort"></i>');
+      }
+      	
+    } else if (desc === 'false'){
+      
       $(data.header).attr('href','/'+loc+'?view='+data.view+'&desc=true');
+
+      if( data.view === view ) {
+      	$(data.header).append(' <i class="fa fa-sort-asc"></i>');
+      } else {
+      	$(data.header).append(' <i class="fa fa-sort"></i>');
+      }
+      	
     }
   } else {
-  	//console.log('test');
-    $(data.header).attr('href','/'+loc+'?view='+data.view);
+  	
+    $(data.header).attr('href','/'+loc+'?view='+data.view+'&desc=false').
+    	append(' <i class="fa fa-sort"></i>');
   
   }
 
 }
 
-
-// function addSortedTableHeaders (data) {
-
-//   for (var i = 0; i < data.length; i++) {
-//     addSortingLinks({
-//       header: data[i].header,
-//       view: data[i].view
-//     });
-//   }
-// }
 
 var addAllLinks = function () {
 
@@ -439,7 +448,7 @@ var addAllLinks = function () {
 	    };
 	    
 	    addSortingLinks(headerData);
-	    //console.log(headerData);
+
 	  }
 
 	}
@@ -453,7 +462,7 @@ exports.addAllLinks = addAllLinks;
 
 
 
-},{"./helpers.js":"/Users/julianbrown/Desktop/demo/public/javascripts/helpers.js","./loc.js":"/Users/julianbrown/Desktop/demo/public/javascripts/loc.js"}],"/Users/julianbrown/Desktop/demo/public/javascripts/stickyHeader.js":[function(require,module,exports){
+},{"./helpers.js":"/Users/julianbrown/Desktop/StatFinder/public/javascripts/helpers.js","./loc.js":"/Users/julianbrown/Desktop/StatFinder/public/javascripts/loc.js"}],"/Users/julianbrown/Desktop/StatFinder/public/javascripts/stickyHeader.js":[function(require,module,exports){
 module.exports = function(){
 	 
 	$('table').each(function() {
@@ -615,4 +624,4 @@ module.exports = function(){
 		}
 	});
 };
-},{}]},{},["/Users/julianbrown/Desktop/demo/public/javascripts/main.js"]);
+},{}]},{},["/Users/julianbrown/Desktop/StatFinder/public/javascripts/main.js"]);

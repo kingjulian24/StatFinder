@@ -21,18 +21,19 @@
         <thead>
           <tr>
             <th>#</th>
-            <th class="store-head" data-view="allstores"><a href="">Store</th>
-            <th class="title-head" data-view="alltitles"><a href="">Title</th>
-            <th class="store-price-head" data-view="allstoreprices"><a href="">Store Price</th>
-            <th class="my-price-head" data-view="allmyprices"><a href="">My Price</th>
-            <th class="min-profit-head" data-view="allminprofits"><a href="">Min Profit</th>
-            <th class="instock-head" data-view="allinstock"><a href="">Instock</th>
-            <th class="profit-head" data-view="allprofit"><a href="">Profit</th>
+            <th class="store-head" data-view="allstores"><a href="">Store</a></th>
+            <th class="title-head" data-view="alltitles"><a href="">Title</a></th>
+            <th class="store-price-head" data-view="allstoreprices"><a href="">Store Price</a></th>
+            <th class="my-price-head" data-view="allmyprices"><a href="">My Price</a></th>
+            <th class="min-profit-head" data-view="allminprofits"><a href="">Min Profit</a></th>
+            <th class="instock-head" data-view="allinstock"><a href="">Instock</a></th>
+            <th class="profit-head" data-view="allprofit"><a href="">Profit</a></th>
             <% if(manage) { %>
               <th class="delete-head" data-view="<%= page %>"><a href="">
                 <form action="/delete?page=<%= page %>?ids=">
                   <button type="submit" class="btn btn-default">Delete</button>
                 </form>
+                </a>
               </th>
             <% } %>
           </tr>

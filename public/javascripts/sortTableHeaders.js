@@ -4,32 +4,41 @@ var helpers = require('./helpers.js');
 function addSortingLinks(data) {
 	console.log(data);
   var desc = helpers.getParameterByName('desc');
+  var view = helpers.getParameterByName('view');
+  console.log(desc);
   
-  if(desc !== undefined) {
+  if(desc !== '') {
 
     if(desc === 'true'){
-      $(data.header).attr('href','/'+loc+'?view='+data.view);
-    } else {
+      
+      $(data.header).attr('href','/'+loc+'?view='+data.view+'&desc=false');
+      
+      if( data.view === view ) {
+      	$(data.header).append(' <i class="fa fa-sort-desc"></i>');
+      } else {
+      	$(data.header).append(' <i class="fa fa-sort"></i>');
+      }
+      	
+    } else if (desc === 'false'){
+      
       $(data.header).attr('href','/'+loc+'?view='+data.view+'&desc=true');
+
+      if( data.view === view ) {
+      	$(data.header).append(' <i class="fa fa-sort-asc"></i>');
+      } else {
+      	$(data.header).append(' <i class="fa fa-sort"></i>');
+      }
+      	
     }
   } else {
-  	//console.log('test');
-    $(data.header).attr('href','/'+loc+'?view='+data.view);
+  	
+    $(data.header).attr('href','/'+loc+'?view='+data.view+'&desc=false').
+    	append(' <i class="fa fa-sort"></i>');
   
   }
 
 }
 
-
-// function addSortedTableHeaders (data) {
-
-//   for (var i = 0; i < data.length; i++) {
-//     addSortingLinks({
-//       header: data[i].header,
-//       view: data[i].view
-//     });
-//   }
-// }
 
 var addAllLinks = function () {
 
@@ -53,7 +62,7 @@ var addAllLinks = function () {
 	    };
 	    
 	    addSortingLinks(headerData);
-	    //console.log(headerData);
+
 	  }
 
 	}
