@@ -18,8 +18,12 @@ module.exports = function (req,view) {
   } else {
     //sort
     var desc = req.param('desc');
-
-    dbView ='queries/'+view+''+ req.param('view');
+    if(view === 'all') {
+      dbView ='queries/'+ req.param('view');
+    } else {
+      dbView ='queries/dash'+ req.param('view');
+    }
+    
     opts = {
       descending: desc
     };
