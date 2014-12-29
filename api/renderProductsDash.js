@@ -1,48 +1,23 @@
 var db = require('./db');
 var stats = require('./getStats');
+var router = require('./router');
 
 
 
 module.exports = function (req,res, pageData) {
-  var dbView ,
-      opts,
-      manage;
-  
-  
-  if(req.param('view') ===  undefined){
-    // display dash
-    dbView ='queries/dash';
-    opts = {
-      descending: false
-    };
-    if(req.param('manage') !==  undefined) {
-      manage = true;
-    } else {
-      manage = false;
-    }
-    
-  } else {
-    //sort
-    var desc = req.param('desc');
+ 
+  var route = router(req, 'dash');
 
-    dbView ='queries/dash'+ req.param('view');
-    opts = {
-      descending: desc
-    };
-
-  }
-  
-
-  db.view( dbView , opts, function  (err, response) {
+  db.view( route.dbView , route.opts, function  (err, response) {
 
     if(!err) {
 
-    var allProducts = [];
-    var products = response.rows;
+      var allProducts = [];
+      var products = response.rows;
 
-    for (var i = 0; i < products.length; i++) {
-      allProducts.push(products[i].value);
-    }
+      for (var i = 0; i < products.length; i++) {
+        allProducts.push(products[i].value);
+      }
 
       var id     = req.param('id') || '';
       var action = req.param('action') || '';
@@ -60,7 +35,7 @@ module.exports = function (req,res, pageData) {
           profitLossCount : data.profitLoss.length,
           available       : data.goodProducts.length,
           loggedIn        : pageData.loggedIn,
-          manage          : manage
+          manage          : route.manage
         });
 
      });
