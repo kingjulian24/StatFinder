@@ -1,6 +1,6 @@
 var passport = require('passport'),
 	LocalStrategy = require('passport-local').Strategy,
-	secret = require('./api/secret');
+	secret = require('../secret');
 
 passport.use(new LocalStrategy(
 	{ passReqToCallback : true }, // allows us to pass back the entire request to the callback

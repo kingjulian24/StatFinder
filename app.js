@@ -1,5 +1,5 @@
 var passport = require('./auth');
-var secret = require('./api/secret');
+var secret = require('../secret');
 var flash = require('connect-flash');
 var session      = require('express-session');
 var express      = require('express');

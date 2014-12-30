@@ -24,7 +24,9 @@
   },
   "description": "Web App that tracks retail product information",
   "main": "app.js",
-  "devDependencies": {},
+  "devDependencies": {
+    "flightplan": "^0.5.5"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/kingjulian24/StatFinder"
