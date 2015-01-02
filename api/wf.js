@@ -53,9 +53,9 @@ exports.crawl = function (formData) {
         parser         = new Parser(config);
         data           = parser.parse(body);
 
-        data.id          = formData.id;
-        data.myPrice     = formData.myPrice;
-        data.minProfit   = formData.minProfit;
+        // data.id          = formData.id;
+        // data.myPrice     = formData.myPrice;
+        // data.minProfit   = formData.minProfit;
         data.storePrice  = data.storePrice  || 'Not Available';
         data.image       = data.image;
         data.stock       = (data.stock === 'http://schema.org/InStock') > 0 ? true : false;
@@ -64,7 +64,7 @@ exports.crawl = function (formData) {
         data.storeID     = storeID;
         data.title       = data.title || 'Not Available';
 
-        save(data);
+        save(data, formData);
 
     });
 };

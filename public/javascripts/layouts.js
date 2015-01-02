@@ -72,11 +72,68 @@ exports.productBodyModal = function (data) {
 
 
   exports.editForm = function  (data,config) {
+    /*jshint multistr: true */
+    var outOfStockVerifiedChecked = ''
+        inStockUnverifiedCheck = '';
+    if(data.OutOfStockVerified === 'on'){
+      outOfStockVerifiedChecked = "checked";
+    }
+    console.log(typeof(data.instock));
+    if( (data.inStockVerified === 'off') && (data.instock === 'true') ) {
+      inStockUnverifiedCheck = "checked";
+    } 
+
     var layout;
     if(config.new){
       layout = '<form class="form-horizontal new-product-form" action="/save?loc='+config.loc+'&action=Added" method="post"> <fieldset> <legend>Add New Product</legend> <div class="form-group"> <label class="col-md-4 control-label" for="id">Product ID</label> <div class="col-md-6"> <input id="id" name="id" type="text" placeholder="Enter product id" class="form-control input-md" required=""> </div></div><div class="form-group"> <label class="col-md-4 control-label" for="store">Store</label> <div class="col-md-6"> <select id="store" name="store" class="form-control"> <option value="">Select</option> <option value="hn">Hayneedle</option> <option value="wm">Walmart</option> <option value="wf">Wayfair</option> </select> </div></div><div class="form-group"> <label class="col-md-4 control-label" for="price">Your Price</label> <div class="col-md-6"> <input id="price" name="my-price" type="number" placeholder="Enter your price" class="form-control input-md" required=""> </div></div><div class="form-group"> <label class="col-md-4 control-label" for="limit">Min Profit</label> <div class="col-md-6"> <input id="min-profit" name="min-profit" type="text" placeholder="Enter minimum profit" class="form-control input-md" required=""> </div></div><div class="form-group"> <label class="col-md-4 control-label" for="submit"></label> <div class="col-md-6"> <button id="submit" type="submit" name="submit" class="btn btn-success">Submit</button> </div></div></fieldset> </form>';
     } else {
-      layout = '<form class="form-horizontal new-product-form" action="/save?loc='+config.loc+'&action=Updated" method="post"> <fieldset> <legend>Product Price: '+data.storePrice+'</legend> <div class="form-group"> <label class="col-md-4 control-label" for="id">Product ID</label> <div class="col-md-6"> <input id="id" name="id" type="text" placeholder="Enter product id" class="form-control input-md" value="'+data.id+'"required=""> </div></div><div class="form-group"> <label class="col-md-4 control-label" for="store">Store</label> <div class="col-md-6"> <select id="store" name="store" class="form-control"> <option value="'+data.storeID+'">'+data.storeName+'</option> </select> </div></div><div class="form-group"> <label class="col-md-4 control-label" for="price">Your Price</label> <div class="col-md-6"> <input id="price" name="my-price" type="number" placeholder="Enter your price" class="form-control input-md" value="'+data.myPrice+'" required=""> </div></div><div class="form-group"> <label class="col-md-4 control-label" for="limit">Min Profit</label> <div class="col-md-6"> <input id="min-profit" name="min-profit" type="text" placeholder="Enter minimum profit" class="form-control input-md" value="'+data.minProfit+'" required=""> </div></div><div class="form-group"> <label class="col-md-4 control-label" for="submit"></label> <div class="col-md-6"> <button id="submit" type="submit" name="submit" class="btn btn-success">Submit</button> </div></div></fieldset> </form>';
+      layout = '<form class="form-horizontal new-product-form" action="/save?loc='+config.loc+'&action=Updated" method="post">\
+  <fieldset> \
+    <legend>Product Price: '+data.storePrice+'</legend>\
+    <div class="form-group">\
+      <label class="col-md-4 control-label" for="id">Product ID</label> \
+      <div class="col-md-6"> \
+        <input id="id" name="id" type="text" placeholder="Enter product id" class="form-control input-md" value="'+data.id+'"required=""> \
+      </div>\
+    </div>\
+    <div class="form-group"> \
+      <label class="col-md-4 control-label" for="store">Store</label> \
+      <div class="col-md-6"> \
+        <select id="store" name="store" class="form-control"> <option value="'+data.storeID+'">'+data.storeName+'</option> </select> \
+      </div>\
+    </div>\
+    <div class="form-group"> \
+      <label class="col-md-4 control-label" for="price">Your Price</label> \
+      <div class="col-md-6"> \
+        <input id="price" name="my-price" type="number" placeholder="Enter your price" class="form-control input-md" value="'+data.myPrice+'" required=""> \
+      </div>\
+    </div>\
+    <div class="form-group"> \
+      <label class="col-md-4 control-label" for="limit">Min Profit</label>\
+       <div class="col-md-6"> \
+        <input id="min-profit" name="min-profit" type="text" placeholder="Enter minimum profit" class="form-control input-md" value="'+data.minProfit+'" required="">\
+       </div>\
+     </div>\
+     <div class="form-group"> \
+      <label class="col-md-4 control-label" for="limit">Varify Out Of Stock</label>\
+       <div class="col-md-6"> \
+        <input id="out-of-stock-verified" name="out-of-stock-verified" type="checkbox" '+outOfStockVerifiedChecked+' >\
+       </div>\
+     </div>\
+     <div class="form-group"> \
+      <label class="col-md-4 control-label" for="limit">Verify In-Stock</label>\
+       <div class="col-md-6"> \
+        <input id="in-stock-verified" name="in-stock-verified" type="checkbox" '+inStockUnverifiedCheck+' >\
+       </div>\
+     </div>\
+     <div class="form-group"> \
+      <label class="col-md-4 control-label" for="submit"></label> \
+      <div class="col-md-6"> \
+        <button id="submit" type="submit" name="submit" class="btn btn-success">Submit</button> \
+      </div>\
+    </div>\
+  </fieldset>\
+ </form>';
     }
     return layout;
   };

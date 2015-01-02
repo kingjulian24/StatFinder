@@ -15,9 +15,9 @@ exports.crawl = function(formData){
 
       data             = JSON.parse(body); // Print the google web page.
 
-      data.id          = formData.id;
-      data.myPrice     = formData.myPrice;
-      data.minProfit   = formData.minProfit;
+      // data.id          = formData.id;
+      // data.myPrice     = formData.myPrice;
+      // data.minProfit   = formData.minProfit;
       data.storePrice  = data.salePrice || 'Not Available';
       data.image       = data.thumbnailImage;
       data.stock       = data.availableOnline;
@@ -26,7 +26,7 @@ exports.crawl = function(formData){
       data.storeID     = storeID;
       data.title       = data.name || 'Not Available';
 
-      save(data);
+      save(data, formData);
     }
   });
 };

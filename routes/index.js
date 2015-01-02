@@ -1,4 +1,3 @@
-var renderProducts = require('../api/renderProducts');
 var renderProductsDash = require('../api/renderProductsDash');
 var express        = require('express');
 var router         = express.Router();
@@ -19,20 +18,23 @@ router.get('/dash', function (req,res){
 
 router.get('/dash/all', function (req,res){
   if (req.session.passport.user !== undefined) {
-    renderProducts(req,res, {view: 'all', loggedIn: true});
+    renderProductsDash(req,res, {view: 'all', loggedIn: true});
   } else {
-    renderProducts(req,res, {view: 'all', loggedIn: false});
+    renderProductsDash(req,res, {view: 'all', loggedIn: false});
   }
 });
 
 router.post('/save', function(req,res){
   if (req.session.passport.user !== undefined) {
+    console.log(req.param('out-of-stock-verified'));
 
     var data = {
-      id        : req.param('id'),
-      storeName : req.param('store'),
-      minProfit : req.param('min-profit'),
-      myPrice   : req.param('my-price')
+      id                 : req.param('id'),
+      storeName          : req.param('store'),
+      minProfit          : req.param('min-profit'),
+      myPrice            : req.param('my-price'),
+      OutOfStockVerified : req.param('out-of-stock-verified'),
+      InStockVerified    : req.param('in-stock-verified')
     };
     require('../api/'+data.storeName).crawl(data);
 

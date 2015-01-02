@@ -45,12 +45,22 @@
         </thead>
         <tbody>
 
-          <% var count,pTitle,instock,profit; %>
+          <% var count,pTitle,instock,profit,verified = '',inStockVerify =''; %>
           <% for ( var i = 0 ; i < products.length; i++) { %>
 
             <%
             count = parseInt(i) + 1;
             pTitle = String(products[i].title).substring(0,15);
+            if(products[i].out_of_stock_verified === 'on') {
+              verified = 'verified';
+            } else {
+              verified = '';
+            }
+            if(products[i].in_stock_verified === 'off' && products[i].instock) {
+              inStockVerify = 'Unverified';
+            } else {
+              inStockVerify = '';
+            }
             instock = Boolean(products[i].instock) ? 'fa fa-check' : 'fa fa-exclamation-triangle';
             profit = Boolean(products[i].profit) ? 'fa fa-check' : 'fa fa-exclamation-triangle';
             %>
@@ -60,16 +70,19 @@
             class="p-row"
             data-count="<%= count %>"
             data-data='{
-              "image"        : "<%= products[i].image %>",
-              "storePrice"   : "<%= products[i].store_price %>",
-              "myPrice"      : "<%= products[i].my_price %>",
-              "description"  : "<%= products[i].description %>",
-              "title"        : "<%= products[i].title %>",
-              "id"           : "<%= products[i]._id %>",
-              "minProfit"    : "<%= products[i].min_profit %>",
-              "storeName"    : "<%= products[i].store_name %>",
-              "storeID"      : "<%= products[i].store_id %>",
-              "link"         : "<%= products[i].link %>"
+              "image"              : "<%= products[i].image %>",
+              "storePrice"         : "<%= products[i].store_price %>",
+              "myPrice"            : "<%= products[i].my_price %>",
+              "description"        : "<%= products[i].description %>",
+              "title"              : "<%= products[i].title %>",
+              "id"                 : "<%= products[i]._id %>",
+              "minProfit"          : "<%= products[i].min_profit %>",
+              "storeName"          : "<%= products[i].store_name %>",
+              "storeID"            : "<%= products[i].store_id %>",
+              "link"               : "<%= products[i].link %>",
+              "OutOfStockVerified" : "<%= products[i].out_of_stock_verified %>",
+              "inStockVerified"    : "<%= products[i].in_stock_verified %>",
+              "instock"            : "<%= products[i].instock %>"
             }'
             >
             <td class="tble-data"><%= count %></td>
@@ -78,7 +91,7 @@
             <td class="tble-data"><%= products[i].store_price %></td>
             <td class="tble-data"><%= products[i].my_price %></td>
             <td class="tble-data"><%= products[i].min_profit %></td>
-            <td class="tble-data"><i class="<%= instock %>"></i></td>
+            <td class="tble-data"><i class="<%= instock %>"></i> <%= verified %><%= inStockVerify%></td>
             <td class="tble-data"><i class="<%= profit %>"></i></td>
             <% if(manage) { %>
             <td class="select-row">

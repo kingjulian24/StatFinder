@@ -6,7 +6,7 @@ var router = require('./router');
 
 module.exports = function (req,res, pageData) {
  
-  var route = router(req, 'dash');
+  var route = router(req, pageData.view);
 
   db.view( route.dbView , route.opts, function  (err, response) {
 
@@ -25,17 +25,19 @@ module.exports = function (req,res, pageData) {
       stats.init( function (data) {
 
         res.render('dashboard.ejs',{
-          products        : allProducts,
-          title           : 'Dashboard',
-          id              : id,
-          view            : pageData.view,
-          action          : action,
-          allCount        : data.allProducts.length,
-          outOfStockCount : data.outOfStock.length,
-          profitLossCount : data.profitLoss.length,
-          available       : data.goodProducts.length,
-          loggedIn        : pageData.loggedIn,
-          manage          : route.manage
+          products                : allProducts,
+          title                   : 'Dashboard',
+          id                      : id,
+          view                    : pageData.view,
+          action                  : action,
+          allCount                : data.allProducts.length,
+          outOfStockCount         : data.outOfStock.length,
+          profitLossCount         : data.profitLoss.length,
+          available               : data.goodProducts.length,
+          loggedIn                : pageData.loggedIn,
+          inStockUnverifiedCount  : data.inStockUnverified.length,
+          outOfStockVerifiedCount : data.outOfStockVerified.length,
+          manage                  : route.manage
         });
 
      });
