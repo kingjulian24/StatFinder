@@ -6,7 +6,11 @@ exports.getParameterByName = function (name) {
     return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 };
 
-
+exports.fadeOutFeedback = function () {
+	setTimeout(function(){
+        $('.updated').fadeOut();
+	},3000);
+};
 
 							
 },{}],"/Users/julianbrown/Desktop/StatFinder/public/javascripts/idCheck.js":[function(require,module,exports){
@@ -375,37 +379,38 @@ module.exports = $('.active').data('page');
 },{}],"/Users/julianbrown/Desktop/StatFinder/public/javascripts/main.js":[function(require,module,exports){
 (function(){
   /* global $: flase */
-  var listeners = require('./listeners.js');
-  var search    = require('./search.js');
-  var sickyHeader = require('./stickyHeader.js');
-  var sortTableHeaders =require('./sortTableHeaders.js');
+  var listeners        = require('./listeners.js');
+  var search           = require('./search.js');
+  var sickyHeader      = require('./stickyHeader.js');
+  var sortTableHeaders = require('./sortTableHeaders.js');
+  var helpers          = require ('./helpers.js');
 
+  // enable sticky header
   sickyHeader();
 
+  // initialize table listeners
   listeners.init({
-    $tblData       : $('.tble-data'),
+    $tblData        : $('.tble-data'),
     $modalContainer : $('.p-modal')
   });
 
+  //intialize search
   search();
 
+  // add table listerners
   listeners.addNewProductBtnListener();
   listeners.tblDataListener();
 
+  // add sort links to table headers
+  sortTableHeaders.addAllLinks();
 
-
-sortTableHeaders.addAllLinks();
-
-
-
-setTimeout(function(){
-        $('.updated').fadeOut();
-},3000);
+  // fadeOut feedback if any
+  helpers.fadeOutFeedback();
 
 
 })(); // end of self invoking function
 
-},{"./listeners.js":"/Users/julianbrown/Desktop/StatFinder/public/javascripts/listeners.js","./search.js":"/Users/julianbrown/Desktop/StatFinder/public/javascripts/search.js","./sortTableHeaders.js":"/Users/julianbrown/Desktop/StatFinder/public/javascripts/sortTableHeaders.js","./stickyHeader.js":"/Users/julianbrown/Desktop/StatFinder/public/javascripts/stickyHeader.js"}],"/Users/julianbrown/Desktop/StatFinder/public/javascripts/search.js":[function(require,module,exports){
+},{"./helpers.js":"/Users/julianbrown/Desktop/StatFinder/public/javascripts/helpers.js","./listeners.js":"/Users/julianbrown/Desktop/StatFinder/public/javascripts/listeners.js","./search.js":"/Users/julianbrown/Desktop/StatFinder/public/javascripts/search.js","./sortTableHeaders.js":"/Users/julianbrown/Desktop/StatFinder/public/javascripts/sortTableHeaders.js","./stickyHeader.js":"/Users/julianbrown/Desktop/StatFinder/public/javascripts/stickyHeader.js"}],"/Users/julianbrown/Desktop/StatFinder/public/javascripts/search.js":[function(require,module,exports){
 function resetSearch ($row, bgColor) {
 
   setTimeout(function() {

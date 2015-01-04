@@ -15,9 +15,6 @@ exports.crawl = function(formData){
 
       data             = JSON.parse(body); // Print the google web page.
 
-      // data.id          = formData.id;
-      // data.myPrice     = formData.myPrice;
-      // data.minProfit   = formData.minProfit;
       data.storePrice  = data.salePrice || 'Not Available';
       data.image       = data.thumbnailImage;
       data.stock       = data.availableOnline;
@@ -29,4 +26,5 @@ exports.crawl = function(formData){
       save(data, formData);
     }
   });
+  
 };

@@ -1,4 +1,4 @@
-var renderProductsDash = require('../api/renderProductsDash');
+var renderDash = require('../api/renderDash');
 var express        = require('express');
 var router         = express.Router();
 
@@ -6,28 +6,38 @@ var router         = express.Router();
 router.get('/', function(req, res) {
   req.method = 'get';
   res.redirect('/dash');
+ 
 });
 
 router.get('/dash', function (req,res){
+  // Check to see if user is logged in
   if (req.session.passport.user !== undefined) {
-    renderProductsDash(req,res, {view: 'dash', loggedIn: true});
+    // Render dashboard template with loggeIn set to true and dbview dash
+    renderDash(req,res, {dbView: 'dash', loggedIn: true});
   } else {
-    renderProductsDash(req,res, {view: 'dash', loggedIn: false});
+    // Render dashboard template with loggeIn set to false
+    renderDash(req,res, {dbView: 'dash', loggedIn: false});
   }
+
 });
 
 router.get('/dash/all', function (req,res){
+
+  // Check to see if user is logged in
   if (req.session.passport.user !== undefined) {
-    renderProductsDash(req,res, {view: 'all', loggedIn: true});
+    // Render dashboard template with loggeIn set to true and dbview all
+    renderDash(req,res, {dbView: 'all', loggedIn: true});
   } else {
-    renderProductsDash(req,res, {view: 'all', loggedIn: false});
+    // Render dashboard template with loggeIn set to false
+    renderDash(req,res, {dbView: 'all', loggedIn: false});
   }
 });
 
 router.post('/save', function(req,res){
+  // Check to see if user is logged in
   if (req.session.passport.user !== undefined) {
-    console.log(req.param('out-of-stock-verified'));
 
+    // save form data
     var data = {
       id                 : req.param('id'),
       storeName          : req.param('store'),
@@ -36,10 +46,12 @@ router.post('/save', function(req,res){
       OutOfStockVerified : req.param('out-of-stock-verified'),
       InStockVerified    : req.param('in-stock-verified')
     };
-    require('../api/'+data.storeName).crawl(data);
-
+    // crawl using form data
+    require('../api/'+data.storeName).crawl( data );
+    
+    // return to previous page with feedback
     req.method = 'get';
-    res.redirect('/'+req.param('loc')+'?id='+data.id+'&action='+req.param('action'));
+    res.status(200).redirect('/'+req.param('loc')+'?id='+data.id+'&action='+req.param('action'));
 
   } else {
     res.redirect('/login');
@@ -57,7 +69,9 @@ router.get('/logout', function(req, res){
 
 
 router.post('/delete', function(req,res){
+  // Check to see if user is logged in
   if (req.session.passport.user !== undefined) {
+    // If logged in delete product using id
     var id = req.param('id');
     require('../api/delete')(id,req,res);
   } else {

@@ -3,12 +3,15 @@ module.exports = function (req,view) {
       opts,
       manage;
 
-	  if(req.param('view') ===  undefined){
-    // display dash
-    dbView ='queries/'+view;
-    opts = {
-      descending: false
-    };
+  // check for sorting request
+  if(req.param('view') ===  undefined){
+      // display dash
+      dbView ='queries/'+view;
+      opts = {
+        descending: false
+      };
+
+      // check to see if manage page is set
     if(req.param('manage') !==  undefined) {
       manage = true;
     } else {
@@ -16,10 +19,15 @@ module.exports = function (req,view) {
     }
     
   } else {
+    
     //sort
     var desc = req.param('desc');
+    
+    // sort all
     if(view === 'all') {
       dbView ='queries/'+ req.param('view');
+    
+    // sort bad products
     } else {
       dbView ='queries/dash'+ req.param('view');
     }

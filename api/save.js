@@ -1,6 +1,6 @@
 var db = require('./db');
 
-module.exports = function(data,formData) {
+module.exports = function (data,formData) {
   var sp        = parseInt(data.storePrice),
       mp        = parseInt(formData.myPrice),
       minProfit = parseInt(formData.minProfit);

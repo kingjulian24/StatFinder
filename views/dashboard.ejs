@@ -13,26 +13,50 @@
 </head>
 
 <body>
-    <% var page %>
+<%
+          //       AVAILABLE DATA 
+          // products                : allProducts,
+          // title                   : 'Dashboard',
+          // id                      : updateRequest.id,
+          // action                  : updateRequest.action,
+          // loggedIn                : pageData.loggedIn,
+          // allCount                : statsData.allProducts.length,
+          // outOfStockCount         : statsData.outOfStock.length,
+          // profitLossCount         : statsData.profitLoss.length,
+          // available               : statsData.goodProducts.length,
+          // inStockUnverifiedCount  : statsData.inStockUnverified.length,
+          // outOfStockVerifiedCount : statsData.outOfStockVerified.length,
+          // view                    : requestedPage.dbView,
+          // manage                  : requestedPage.manage
+
+
+          // VARIABLES
+          // page
+  %>
+    <!-- initialized within nav -->
     <% include /nav %>
     <div class="container">
+      <!-- update feedback -->
       <% if (id !== '') { %>
         <p class="updated lead text-center">Product <strong><%= id %></strong> was <%= action %>.</p>
       <% } %>
-
+      
+      <!-- Status Panels -->
       <% include /statPanels %>
 
-      <table class="isortope">
+      <table>
         <thead>
           <tr>
             <th>#</th>
-            <th class="store-head" data-view="allstores"><a href="">Store</a></th>
-            <th class="title-head" data-view="alltitles"><a href="">Title</a></th>
-            <th class="store-price-head" data-view="allstoreprices"><a href="">Store Price</a></th>
-            <th class="my-price-head" data-view="allmyprices"><a href="">My Price</a></th>
-            <th class="min-profit-head" data-view="allminprofits"><a href="">Min Profit</a></th>
-            <th class="instock-head" data-view="allinstock"><a href="">Instock</a></th>
-            <th class="profit-head" data-view="allprofit"><a href="">Profit</a></th>
+            <th class="store-head"        data-view="allstores"><a href="">Store</a></th>
+            <th class="title-head"        data-view="alltitles"><a href="">Title</a></th>
+            <th class="store-price-head"  data-view="allstoreprices"><a href="">Store Price</a></th>
+            <th class="my-price-head"     data-view="allmyprices"><a href="">My Price</a></th>
+            <th class="min-profit-head"   data-view="allminprofits"><a href="">Min Profit</a></th>
+            <th class="instock-head"      data-view="allinstock"><a href="">Instock</a></th>
+            <th class="profit-head"       data-view="allprofit"><a href="">Profit</a></th>
+            
+            <!-- Display if manage is set to true -->
             <% if(manage) { %>
               <th class="delete-head" data-view="<%= page %>"><a href="">
                 <form action="/delete?page=<%= page %>?ids=">
@@ -45,24 +69,26 @@
         </thead>
         <tbody>
 
-          <% var count,pTitle,instock,profit,verified = '',inStockVerify =''; %>
+          <% 
+            
+            var count,
+                pTitle,
+                instock,
+                profit;
+            
+           %>
+          
+          <!-- Loop through products from renderProductsDash -->
           <% for ( var i = 0 ; i < products.length; i++) { %>
 
             <%
-            count = parseInt(i) + 1;
-            pTitle = String(products[i].title).substring(0,15);
-            if(products[i].out_of_stock_verified === 'on') {
-              verified = 'verified';
-            } else {
-              verified = '';
-            }
-            if(products[i].in_stock_verified === 'off' && products[i].instock) {
-              inStockVerify = 'Unverified';
-            } else {
-              inStockVerify = '';
-            }
-            instock = Boolean(products[i].instock) ? 'fa fa-check' : 'fa fa-exclamation-triangle';
-            profit = Boolean(products[i].profit) ? 'fa fa-check' : 'fa fa-exclamation-triangle';
+              count = parseInt(i) + 1;
+              pTitle = String(products[i].title).substring(0,15);
+              
+
+              instock = Boolean(products[i].instock) ? 'fa fa-check' : 'fa fa-exclamation-triangle';
+              profit = Boolean(products[i].profit) ? 'fa fa-check' : 'fa fa-exclamation-triangle';
+            
             %>
 
             <tr
@@ -91,8 +117,10 @@
             <td class="tble-data"><%= products[i].store_price %></td>
             <td class="tble-data"><%= products[i].my_price %></td>
             <td class="tble-data"><%= products[i].min_profit %></td>
-            <td class="tble-data"><i class="<%= instock %>"></i> <%= verified %><%= inStockVerify%></td>
+            <td class="tble-data"><i class="<%= instock %>"></i></td>
             <td class="tble-data"><i class="<%= profit %>"></i></td>
+            
+            <!-- Display if manage is set to true -->
             <% if(manage) { %>
             <td class="select-row">
                 <input type="checkbox" name="chk" class="chk" >

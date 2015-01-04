@@ -1,31 +1,32 @@
 (function(){
   /* global $: flase */
-  var listeners = require('./listeners.js');
-  var search    = require('./search.js');
-  var sickyHeader = require('./stickyHeader.js');
-  var sortTableHeaders =require('./sortTableHeaders.js');
+  var listeners        = require('./listeners.js');
+  var search           = require('./search.js');
+  var sickyHeader      = require('./stickyHeader.js');
+  var sortTableHeaders = require('./sortTableHeaders.js');
+  var helpers          = require ('./helpers.js');
 
+  // enable sticky header
   sickyHeader();
 
+  // initialize table listeners
   listeners.init({
-    $tblData       : $('.tble-data'),
+    $tblData        : $('.tble-data'),
     $modalContainer : $('.p-modal')
   });
 
+  //intialize search
   search();
 
+  // add table listerners
   listeners.addNewProductBtnListener();
   listeners.tblDataListener();
 
+  // add sort links to table headers
+  sortTableHeaders.addAllLinks();
 
-
-sortTableHeaders.addAllLinks();
-
-
-
-setTimeout(function(){
-        $('.updated').fadeOut();
-},3000);
+  // fadeOut feedback if any
+  helpers.fadeOutFeedback();
 
 
 })(); // end of self invoking function

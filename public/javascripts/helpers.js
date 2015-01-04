@@ -5,6 +5,10 @@ exports.getParameterByName = function (name) {
     return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 };
 
-
+exports.fadeOutFeedback = function () {
+	setTimeout(function(){
+        $('.updated').fadeOut();
+	},3000);
+};
 
 							
