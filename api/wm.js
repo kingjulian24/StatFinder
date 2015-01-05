@@ -1,4 +1,4 @@
-var secret = require('./secret');
+var secret = require('../secret');
 var data = '';
 var request = require('request');
 var save = require('./save');
