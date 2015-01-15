@@ -61,7 +61,7 @@ module.exports = {
       addClass('back-btn').
       removeClass('edit-btn').
       blur().
-      after('<form class="delete-form" action="/delete?loc='+ loc +'&id='+ self.$currentRowData.id +'" style="display:inline;" method="post"><button type="submit" class="btn btn-default delete-btn">Delete</button></form>'); // add delete btn
+      after('<form class="delete-form" action="/delete?loc='+ loc +'&id='+ self.rowData.id +'" style="display:inline;" method="post"><button type="submit" class="btn btn-default delete-btn">Delete</button></form>'); // add delete btn
 
       // save new elements
       self.$deleteBtn = $('.delete-btn');

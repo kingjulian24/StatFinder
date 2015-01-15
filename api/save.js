@@ -19,7 +19,9 @@ module.exports = function(data) {
     link        : data.link,
     instock     : data.stock,
     profit      : data.profit,
-    store_id    : data.storeID
+    store_id    : data.storeID,
+    timestamp   : new Date().getTime(),
+    osv         : false
   },
     function  (err, res) {
       if (err){
