@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+<nav class="navbar navbar-default navbar-fixed-top">
   <div class="container">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
@@ -8,47 +8,25 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="/">StatFinder</a>
+      <a class="navbar-brand" href="/#/">StatFinder</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li
-          <% if(view === 'dash') { %>
-          <% page ='dash' %>
-            class="active"
-            data-page="<%= page %>"
-          <% } %>
-        ><a href="/dash">Dashboard <span class="sr-only">(current)</span></a></li>
-        <li
-          <% if(view === 'all') { %>
-          <% page ='dash/all' %>
-            class="active"
-            data-page="<%= page %>"
-          <% } %>
-        ><a href="/dash/all">All Products</a></li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Options <span class="caret"></span></a>
-          <ul class="dropdown-menu" role="menu">
-            <li class="add-new-product"><a href="#">Add New Product</a></li>
-            <li class="divider"></li>
-            <li><a href="#">Manage Products</a></li>
-          </ul>
-        </li>
+        <li><a href="#" ng-click="showModal('newProduct')"><i class="fa fa-plus"></i> New Product</a></li>
       </ul>
       <form class="navbar-form navbar-left" role="search">
         <div class="form-group">
-          <input type="text" class="form-control search-input" placeholder="Search by id">
+          <input type="text" class="form-control search" placeholder="Search" ng-model="$parent.searchText">
         </div>
-        <button type="submit" class="btn btn-default">Submit</button>
       </form>
       <ul class="nav navbar-nav navbar-right">
-      <% if(!loggedIn) {%>
+        <% if(!loggedIn) {%>
         <li><a href="/login"><i class="fa fa-sign-in"></i> Login</a></li>
-      <% } else { %>
+        <% } else { %>
         <li><a href="/logout"><i class="fa fa-sign-out"></i> Logout</a></li>
-      <% } %>
+        <% } %>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->

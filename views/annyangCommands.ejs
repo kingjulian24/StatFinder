@@ -1,0 +1,10 @@
+
+<div class="row alert alert-info" ng-show="showCommands">
+	<h3 class="lead">Voice Commands</h3>
+	<ul class="nav nav-pills" ng-repeat="c in commands">
+		<li  role="presentation" class="active" >Say: {{ c }}</li>	
+	</ul>
+	<br />
+	<p class="small">*val = any words</p>
+	<p class="small">*val = ascending or decending for sort by title</p>
+</div>

@@ -1,0 +1,14 @@
+<div class="row" ng-show="moreInfo">
+    <div class="col-xs-4">
+        <img ng-src="{{ currentProduct.image  }}" class="img-responsive" />
+    </div>  
+    <div class="col-xs-8">
+        <p><strong>ID: </strong>{{ currentProduct._id }}</p>
+        <p><strong>Last Updated: </strong>{{ currentProduct.timestamp }}</p>
+        <p><strong>StorePrice: </strong>{{ currentProduct.store_price }}</p>
+        <p><strong>My Price: </strong>{{ currentProduct.my_price }}</p>
+        <p><strong>ProfitLoss: </strong>{{ currentProduct.profit }}</p>
+        <p><strong>Instock: </strong>{{ currentProduct.instock }}</p>
+        <p><strong>Description: </strong>{{ currentProduct.description }}</p>
+    </div>
+</div>
