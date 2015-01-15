@@ -1,29 +1,24 @@
-var renderProducts = require('../api/renderProducts');
-var renderProductsDash = require('../api/renderProductsDash');
+
 var express        = require('express');
 var router         = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res) {
-  req.method = 'get';
-  res.redirect('/dash');
-});
-
-router.get('/dash', function (req,res){
+  
   if (req.session.passport.user !== undefined) {
-    renderProductsDash(req,res, {view: 'dash', loggedIn: true});
+    res.render('index',{view: 'dash', loggedIn: true});
   } else {
-    renderProductsDash(req,res, {view: 'dash', loggedIn: false});
+    res.render('index',{view: 'dash', loggedIn: false});
   }
 });
 
-router.get('/dash/all', function (req,res){
-  if (req.session.passport.user !== undefined) {
-    renderProducts(req,res, {view: 'all', loggedIn: true});
-  } else {
-    renderProducts(req,res, {view: 'all', loggedIn: false});
-  }
+// data api
+router.get('/getProductsData', function(req, res) {
+  require('../api/getStats').init(function(stats){
+    res.jsonp(stats);
+  }); 
 });
+
 
 router.post('/save', function(req,res){
   if (req.session.passport.user !== undefined) {
@@ -37,7 +32,7 @@ router.post('/save', function(req,res){
     require('../api/'+data.storeName).crawl(data);
 
     req.method = 'get';
-    res.redirect('/'+req.param('loc')+'?id='+data.id+'&action='+req.param('action'));
+    res.redirect('/?id='+data.id+'&action='+req.param('action'));
 
   } else {
     res.redirect('/login');

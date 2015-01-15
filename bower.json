@@ -1,13 +1,10 @@
 {
   "name": "StatFinder",
-  "version": "0.0.0",
+  "version": "2.2.0",
   "authors": [
     "Julian Brown <brownjulian2@gmail.com>"
   ],
-  "description": "Web App that tracks retail product information",
-  "moduleType": [
-    "node"
-  ],
+  "description": "Web app that tracks online retail products",
   "license": "MIT",
   "private": true,
   "ignore": [
@@ -18,7 +15,13 @@
     "tests"
   ],
   "dependencies": {
-    "bootstrap-table": "~1.5.0",
-    "bootstrap": "~3.3.1"
+    "angular": "~1.3.8",
+    "angular-route": "~1.3.8",
+    "bootstrap": "~3.3.1",
+    "jquery": "~2.1.3",
+    "font-awesome": "~4.2.0",
+    "angular-animate": "~1.3.8",
+    "Font-Awesome": "~4.2.0",
+    "annyang": "~1.5.0"
   }
 }

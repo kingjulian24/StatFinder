@@ -14,6 +14,8 @@ var db = require('./db');
           };
 
         
+
+        
         var products = response.rows;
 
         for (var i = 0; i < products.length; i++) {
@@ -33,43 +35,7 @@ var db = require('./db');
           }
 
         }
+        
         callback(stats);
     });
   };
-
-
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
