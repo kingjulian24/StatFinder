@@ -5,9 +5,10 @@ exports.blankModal = function (title){
 
 
 // source/edit/delete modal
-exports.modal =   function (data) {
+exports.getModalTemplate =   function (data) {
   /*jshint multistr: true */
-  var profit = parseInt(data.myPrice) - parseInt(data.storePrice);
+  var profitLoss = data.profitLoss ? 'Yes' : 'No';
+  var instock = data.instock ? 'Yes' : 'No';
 
   var layout = '\
     <div class="modal fade" id="myModal">\
@@ -24,9 +25,12 @@ exports.modal =   function (data) {
                 <img src="'+data.image+'" class="img-responsive" />\
               </div>\
               <div class="col-xs-8">\
-                <p><strong>StorePrice: </strong>$'+data.storePrice+'</p>\
-                <p><strong>My Price: </strong>$'+data.myPrice+'</p>\
-                <p><strong>Profit: </strong>$'+profit+'</p>\
+                <p><strong>ID: </strong>'+data.id+'</p>\
+                <p><strong>Last Updated: </strong>'+data.timestamp+'</p>\
+                <p><strong>StorePrice: </strong>'+data.storePrice+'</p>\
+                <p><strong>My Price: </strong>'+data.myPrice+'</p>\
+                <p><strong>ProfitLoss: </strong>'+ profitLoss +'</p>\
+                <p><strong>Instock: </strong>'+instock +'</p>\
                 <p><strong>Description: </strong>'+data.description+'</p>\
               </div>\
             </div>\
@@ -73,10 +77,126 @@ exports.productBodyModal = function (data) {
 
   exports.editForm = function  (data,config) {
     var layout;
+    var checked = data.osv ? 'checked' : '';
     if(config.new){
-      layout = '<form class="form-horizontal new-product-form" action="/save?loc='+config.loc+'&action=Added" method="post"> <fieldset> <legend>Add New Product</legend> <div class="form-group"> <label class="col-md-4 control-label" for="id">Product ID</label> <div class="col-md-6"> <input id="id" name="id" type="text" placeholder="Enter product id" class="form-control input-md" required=""> </div></div><div class="form-group"> <label class="col-md-4 control-label" for="store">Store</label> <div class="col-md-6"> <select id="store" name="store" class="form-control"> <option value="">Select</option> <option value="hn">Hayneedle</option> <option value="wm">Walmart</option> <option value="wf">Wayfair</option> </select> </div></div><div class="form-group"> <label class="col-md-4 control-label" for="price">Your Price</label> <div class="col-md-6"> <input id="price" name="my-price" type="number" placeholder="Enter your price" class="form-control input-md" required=""> </div></div><div class="form-group"> <label class="col-md-4 control-label" for="limit">Min Profit</label> <div class="col-md-6"> <input id="min-profit" name="min-profit" type="text" placeholder="Enter minimum profit" class="form-control input-md" required=""> </div></div><div class="form-group"> <label class="col-md-4 control-label" for="submit"></label> <div class="col-md-6"> <button id="submit" type="submit" name="submit" class="btn btn-success">Submit</button> </div></div></fieldset> </form>';
+      layout = '<form class="form-horizontal new-product-form" action="/save?action=Added" method="post">\
+                 <fieldset>\
+                  <legend>Add New Product</legend>\
+                  <div class="form-group">\
+                    <label class="col-md-4 control-label" for="id">Product ID</label>\
+                    <div class="col-md-6">\
+                      <input id="id" name="id" type="text" placeholder="Enter product id" class="form-control input-md" required="">\
+                     </div>\
+                   </div>\
+                   <div class="form-group">\
+                    <label class="col-md-4 control-label" for="store">Store</label>\
+                    <div class="col-md-6">\
+                      <select id="store" name="store" class="form-control">\
+                        <option value="">Select</option>\
+                        <option value="hn">Hayneedle</option>\
+                        <option value="wm">Walmart</option>\
+                        <option value="wf">Wayfair</option>\
+                      </select>\
+                    </div>\
+                   </div>\
+                   <div class="form-group">\
+                    <label class="col-md-4 control-label" for="price">Your Price</label>\
+                    <div class="col-md-6">\
+                      <input id="price" name="my-price" type="number" placeholder="Enter your price" class="form-control input-md" required="">\
+                    </div>\
+                  </div>\
+                   <div class="form-group">\
+                    <label class="col-md-4 control-label" for="limit">Min Profit</label>\
+                    <div class="col-md-6">\
+                      <input id="min-profit" name="min-profit" type="text" placeholder="Enter minimum profit" class="form-control input-md" required="">\
+                    </div>\
+                  </div>\
+                  <div class="form-group"> \
+                    <label class="col-md-4 control-label osv-label" for="limit">OSV</label> \
+                    <div class="col-md-6"> \
+                      <input id="osv" name="osv" type="checkbox" /> \
+                    </div> \
+                  </div>  \
+                   <div class="form-group">\
+                    <label class="col-md-4 control-label" for="submit"></label>\
+                    <div class="col-md-6">\
+                      <button id="submit" type="submit" name="submit" class="btn btn-success">Submit</button>\
+                    </div>\
+                   </div>\
+                  </fieldset>\
+                 </form>';
     } else {
-      layout = '<form class="form-horizontal new-product-form" action="/save?loc='+config.loc+'&action=Updated" method="post"> <fieldset> <legend>Product Price: '+data.storePrice+'</legend> <div class="form-group"> <label class="col-md-4 control-label" for="id">Product ID</label> <div class="col-md-6"> <input id="id" name="id" type="text" placeholder="Enter product id" class="form-control input-md" value="'+data.id+'"required=""> </div></div><div class="form-group"> <label class="col-md-4 control-label" for="store">Store</label> <div class="col-md-6"> <select id="store" name="store" class="form-control"> <option value="'+data.storeID+'">'+data.storeName+'</option> </select> </div></div><div class="form-group"> <label class="col-md-4 control-label" for="price">Your Price</label> <div class="col-md-6"> <input id="price" name="my-price" type="number" placeholder="Enter your price" class="form-control input-md" value="'+data.myPrice+'" required=""> </div></div><div class="form-group"> <label class="col-md-4 control-label" for="limit">Min Profit</label> <div class="col-md-6"> <input id="min-profit" name="min-profit" type="text" placeholder="Enter minimum profit" class="form-control input-md" value="'+data.minProfit+'" required=""> </div></div><div class="form-group"> <label class="col-md-4 control-label" for="submit"></label> <div class="col-md-6"> <button id="submit" type="submit" name="submit" class="btn btn-success">Submit</button> </div></div></fieldset> </form>';
+      layout = '<form class="form-horizontal new-product-form" action="/save?ction=Updated" method="post">\
+                  <fieldset>\
+                      <legend>Product Price: '+data.storePrice+'</legend>\
+                      <div class="form-group">\
+                          <label class="col-md-4 control-label" for="id">Product ID</label>\
+                          <div class="col-md-6">\
+                              <input id="id" name="id" type="text" placeholder="Enter product id" class="form-control input-md" value="'+data.id+'" required="" /> \
+                          </div>\
+                      </div>\
+                      <div class="form-group">\
+                          <label class="col-md-4 control-label" for="store">Store</label>\
+                          <div class="col-md-6">\
+                              <select id="store" name="store" class="form-control">\
+                                  <option value="'+data.storeID+'">'+data.storeName+'</option>\
+                              </select>\
+                          </div>\
+                      </div>\
+                      <div class="form-group">\
+                          <label class="col-md-4 control-label" for="price">Your Price</label>\
+                          <div class="col-md-6">\
+                              <input id="price" name="my-price" type="number" placeholder="Enter your price" class="form-control input-md" value="'+data.myPrice+'" required=""> \
+                           </div>\
+                      </div>\
+                      <div class="form-group">\
+                          <label class="col-md-4 control-label" for="limit">Min Profit</label>\
+                          <div class="col-md-6">\
+                              <input id="min-profit" name="min-profit" type="text" placeholder="Enter minimum profit" class="form-control input-md" value="'+data.minProfit+'" required=""> \
+                          </div>\
+                      </div>\
+                      <div class="form-group"> \
+                        <label class="col-md-4 control-label osv-label" for="limit">OSV</label> \
+                        <div class="col-md-6"> \
+                          <input id="osv" name="osv" type="checkbox" '+checked+'/> \
+                        </div> \
+                      </div>  \
+                      <div class="form-group">\
+                          <label class="col-md-4 control-label" for="submit"></label>\
+                          <div class="col-md-6">\
+                              <button id="submit" type="submit" name="submit" class="btn btn-success">Submit</button>\
+                          </div>\
+                      </div>\
+                  </fieldset>\
+              </form>';
     }
     return layout;
   };
+
+
+   exports.deleteBtn = function (serverUrl, id) {
+    return '<form class="delete-form" action="'+serverUrl+'/delete?id='+ id +'" style="display:inline;" method="post"> \
+              <button type="submit" class="btn btn-default delete-btn">Delete</button> \
+          </form>';
+   };
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
