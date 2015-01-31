@@ -2,10 +2,12 @@ var db = require('./db');
 
 module.exports = function(data) {
   var sp        = parseInt(data.storePrice),
-      mp        = parseInt(data.myPrice),
-      minProfit = parseInt(data.minProfit);
+      mp        = parseInt(data.myPrice);
 
-  data.profit = ( (mp - sp) >= minProfit ) ? true : false;
+  // limits
+  var upperLimit = data.upper_limit + mp;
+  var lowerLimit = data.lower_limit - mp;
+  var deviated = ( (sp > upperLimit) || (sp < lowerLimit) ) ? true : false;
 
   db.save({
     _id         : data.id,
@@ -13,12 +15,13 @@ module.exports = function(data) {
     store_name  : data.storeName,
     my_price    : parseInt(data.myPrice),
     store_price : parseInt(data.storePrice),
-    min_profit  : data.minProfit,
+    upper_limit : data.upperLimit,
+    lower_limit : data.lowerLimit,
     description : data.description,
     image       : data.image,
     link        : data.link,
     instock     : data.stock,
-    profit      : data.profit,
+    deviated    : deviated,
     store_id    : data.storeID,
     timestamp   : new Date().getTime(),
     osv         : false
