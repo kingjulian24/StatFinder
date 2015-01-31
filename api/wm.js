@@ -27,6 +27,8 @@ exports.crawl = function(formData){
       data.title       = data.name || 'Not Available';
 
       save(data);
+    } else {
+      console.log('Walmart request failed');
     }
   });
 };

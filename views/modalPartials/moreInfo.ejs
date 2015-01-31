@@ -4,7 +4,7 @@
     </div>  
     <div class="col-xs-8">
         <p><strong>ID: </strong>{{ currentProduct._id }}</p>
-        <p><strong>Last Updated: </strong>{{ currentProduct.timestamp }}</p>
+        <p><strong>Last Updated: </strong>{{ currentProduct.timestamp | date:'medium' }}</p>
         <p><strong>StorePrice: </strong>{{ currentProduct.store_price }}</p>
         <p><strong>My Price: </strong>{{ currentProduct.my_price }}</p>
         <p><strong>ProfitLoss: </strong>{{ currentProduct.profit }}</p>

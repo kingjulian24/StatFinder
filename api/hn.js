@@ -1,3 +1,4 @@
+//'use strict';
 var Parser, request, config, url;
 var save = require('./save');
 var storeName = 'Hayneedle',
@@ -35,22 +36,30 @@ config = {
 };
 
 exports.crawl = function(formData){
-  url = 'http://search.hayneedle.com/search/null.cfm?Ntt='+formData.id;
+  
+  requestOptions = {
+    url : url = 'http://search.hayneedle.com/search/null.cfm?Ntt='+formData.id,
+    headers: {
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.93 Safari/537.36'
+    }
+  };
+
 
   // request a page
-  request.get(url, function(err, res, body){
+  request.get(requestOptions, function(err, res, body){
 
     // handle error and non-200 response here
     if(err || (res.statusCode !== 200)){
-      return console.log("An error occured.");
+      return console.log("Hayneedle request failed");
     }
 
+  
+    //console.log(body);
     var parser, data;
 
     // parse body
     parser         = new Parser(config);
     data           = parser.parse(body);
-
     data.id          = formData.id;
     data.myPrice     = formData.myPrice;
     data.minProfit   = formData.minProfit;
@@ -62,6 +71,7 @@ exports.crawl = function(formData){
     data.storeID     = storeID;
     data.title       = data.title  || 'Not Available';
 
+    // save to couchdb
     save(data);
 
 

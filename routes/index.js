@@ -29,6 +29,7 @@ router.post('/save', function(req,res){
       minProfit : req.param('min-profit'),
       myPrice   : req.param('my-price')
     };
+
     require('../api/'+data.storeName).crawl(data);
 
     req.method = 'get';

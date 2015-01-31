@@ -1,11 +1,12 @@
 <!-- loading animation -->
 <div class="text-center" ng-show="loading"><img src="/images/loading.gif" alt=""></div>
-
- <table class="table table-hover">
+<div class="table-responsive">
+	<table class="table table-hover">
  	
  	<thead>
  		<tr>
  			<th>#</th>
+ 			<th>Time</th>
  			<th><a href="" ng-click="reverse=!reverse;order('_id',reverse)" data-sortarrow data-reverse="false">			ID <i class="fa fa-sort"></i></a></th>
  			<th><a href="" ng-click="reverse=!reverse;order('store_name',reverse)" data-sortarrow data-reverse="false">		Store <i class="fa fa-sort"></i></a></th>
  			<th><a href="" ng-click="reverse=!reverse;order('title',reverse)" data-sortarrow data-reverse="fales">			Title <i class="fa fa-sort"></i></a></th>
@@ -20,6 +21,7 @@
 	<tbody>
 		<tr ng-repeat="product in Products | filter:searchText " ng-click="showModal('moreInfo',product)">
 			<td>{{ $index + 1 }}</td>
+			<td>{{ product.timestamp | date:'medium' }}</td>
 			<td>{{ product._id }}</td>
 			<td>{{ product.store_name }}</td>
 			<td>{{ product.title | limitTo: 25 }}...</td>
@@ -31,3 +33,7 @@
 		</tr>
 	</tbody>
  </table>
+</div>
+
+
+ 

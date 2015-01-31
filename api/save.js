@@ -27,7 +27,7 @@ module.exports = function(data) {
       if (err){
         console.log('failed to save '+data.id);
       } else {
-        console.log(res);
+        console.log('saved: '+data.storeName+', '+data.id);
       }
   });
 };

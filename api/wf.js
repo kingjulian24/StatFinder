@@ -43,10 +43,9 @@ exports.crawl = function (formData) {
 
     // request a page
     request.get(url, function (err, res, body) {
-
         // handle error and non-200 response here
         if (err || (res.statusCode !== 200)) {
-            return console.log('An error occured.');
+            return console.log('Wayfair request failed');
         }
 
         // parse body
