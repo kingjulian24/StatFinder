@@ -62,13 +62,15 @@ exports.crawl = function(formData){
     data           = parser.parse(body);
     data.id          = formData.id;
     data.myPrice     = formData.myPrice;
-    data.minProfit   = formData.minProfit;
     data.storePrice  = data.storePrice  || 'Not Available';
     data.image       = data.image;
     data.stock       = parseInt(data.storePrice, 10) > 0 ? true : false;
     data.link        = data.link;
     data.storeName   = storeName;
     data.storeID     = storeID;
+    data.upperLimit  = formData.upperLimit;
+    data.lowerLimit  = formData.lowerLimit;
+    data.osv         = formData.osv || false;
     data.title       = data.title  || 'Not Available';
 
     // save to couchdb

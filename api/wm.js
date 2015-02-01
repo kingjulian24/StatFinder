@@ -13,18 +13,20 @@ exports.crawl = function(formData){
   request(url, function (error, response, body) {
     if (!error && response.statusCode === 200) {
 
-      data             = JSON.parse(body); // Print the google web page.
+      data            = JSON.parse(body); // Print the google web page.
 
-      data.id          = formData.id;
-      data.myPrice     = formData.myPrice;
-      data.minProfit   = formData.minProfit;
-      data.storePrice  = data.salePrice || 'Not Available';
-      data.image       = data.thumbnailImage;
-      data.stock       = data.availableOnline;
-      data.link        = data.productUrl;
-      data.storeName   = storeName;
-      data.storeID     = storeID;
-      data.title       = data.name || 'Not Available';
+      data.id         = formData.id;
+      data.myPrice    = formData.myPrice;
+      data.storePrice = data.salePrice || 'Not Available';
+      data.image      = data.thumbnailImage;
+      data.stock      = data.availableOnline;
+      data.link       = data.productUrl;
+      data.storeName  = storeName;
+      data.storeID    = storeID;
+      data.upperLimit = formData.upperLimit;
+      data.lowerLimit = formData.lowerLimit;
+      data.osv        = formData.osv || false;
+      data.title      = data.name || 'Not Available';
 
       save(data);
     } else {

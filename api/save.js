@@ -5,11 +5,12 @@ module.exports = function(data) {
       mp        = parseInt(data.myPrice);
 
   // limits
-  var upperLimit = data.upper_limit + mp;
-  var lowerLimit = data.lower_limit - mp;
-  var deviated = ( (sp > upperLimit) || (sp < lowerLimit) ) ? true : false;
+  var upperLimit = data.upperLimit + mp;
+  var lowerLimit = data.lowerLimit - mp;
+  var deviated = ( (sp >= upperLimit) || (sp <= lowerLimit) ) ? true : false;
 
-  db.save({
+  // data to be saved
+  var saveData = {
     _id         : data.id,
     title       : data.title,
     store_name  : data.storeName,
@@ -24,13 +25,17 @@ module.exports = function(data) {
     deviated    : deviated,
     store_id    : data.storeID,
     timestamp   : new Date().getTime(),
-    osv         : false
-  },
+    osv         : data.osv
+  };
+
+  db.save( saveData,
     function  (err, res) {
       if (err){
         console.log('failed to save '+data.id);
       } else {
         console.log('saved: '+data.storeName+', '+data.id);
+        console.log('Data: ');
+        console.log(saveData);
       }
   });
 };

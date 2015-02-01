@@ -7,7 +7,7 @@
             outOfStock   : [],
             osv          : [],
             isuv         : [],
-            profitLoss   : [],
+            deviated     : [],
             allProducts  : [],
             goodProducts : [],
             badProducts  : [],
@@ -38,8 +38,8 @@
             continue;
           }
           // profit loss
-          if(!products[i].value.profit) {
-            stats.profitLoss.push(products[i].value);
+          if(!products[i].value.deviated) {
+            stats.deviated.push(products[i].value);
           }
           // out of stock
           if( !products[i].value.instock && !products[i].value.osv ){

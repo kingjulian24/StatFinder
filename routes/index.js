@@ -21,20 +21,26 @@ router.get('/getProductsData', function(req, res) {
 
 
 router.post('/save', function(req,res){
+  // authenticate user
   if (req.session.passport.user !== undefined) {
 
     var data = {
-      id        : req.param('id'),
-      storeName : req.param('store'),
-      minProfit : req.param('min-profit'),
-      myPrice   : req.param('my-price')
+      id         : req.param('id')           ,
+      storeName  : req.param('store')        ,
+      upperLimit : req.param('upper-limit') ,
+      lowerLimit : req.param('lower-limit') ,
+      osv        : req.param('osv'),
+      myPrice    : req.param('my-price')
     };
 
+    // crawl and save data
     require('../api/'+data.storeName).crawl(data);
 
+    // redirect to home
     req.method = 'get';
     res.redirect('/?id='+data.id+'&action='+req.param('action'));
 
+  // redirect to login page
   } else {
     res.redirect('/login');
   }

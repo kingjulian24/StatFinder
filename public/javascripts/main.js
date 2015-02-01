@@ -24,7 +24,7 @@ sf.controller('dashCtrl', ['$scope','$http','$filter','$compile', '$sce', functi
 	 
 		$scope.allProductsCount  = data.allProducts.length;
 		$scope.outOfStockCount   = data.outOfStock.length;
-		$scope.profitLossCount   = data.profitLoss.length;
+		$scope.deviatedCount     = data.deviated.length;
 		$scope.goodProductsCount = data.goodProducts.length;
 		$scope.badProductsCount  = data.badProducts.length;
 		$scope.osvCount          = data.osv.length;
