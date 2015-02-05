@@ -4,13 +4,13 @@
         <div class="form-group">
             <label class="col-md-4 control-label" for="id">Product ID</label>
             <div class="col-md-6">
-                <input id="id" name="id" type="text" placeholder="Enter product id" class="form-control input-md" value="{{ currentProduct._id }}" required="" ng-modal="product.id" />
+                <input id="id" name="id" type="text" placeholder="Enter product id" class="form-control input-md" value="{{ currentProduct._id }}" required="" ng-modal="product.id" readonly />
             </div>
         </div>
         <div class="form-group">
             <label class="col-md-4 control-label" for="store">Store</label>
             <div class="col-md-6">
-                <select id="store" name="store" class="form-control">
+                <select id="store" name="store" class="form-control" readonly>
                     <option value="{{ currentProduct.store_id }}">{{ currentProduct.store_name }}</option>
                 </select>
             </div>
@@ -24,19 +24,25 @@
         <div class="form-group">
             <label class="col-md-4 control-label" for="limit">Upper Limit</label>
             <div class="col-md-6">
-                <input id="upper-limit" name="upper-limit" type="text" placeholder="Upper price limit" class="form-control input-md" value="{{ currentProduct.upper_limit }}" required="">
+                <input id="upper-limit" name="upper-limit" type="number" placeholder="Upper price limit" class="form-control input-md" value="{{ currentProduct.upper_limit }}" required="">
             </div>
         </div>
         <div class="form-group">
             <label class="col-md-4 control-label" for="limit">Lower Limit</label>
             <div class="col-md-6">
-                <input id="lower-limit" name="lower-limit" type="text" placeholder="lower price limit" class="form-control input-md" value="{{ currentProduct.lower_limit }}" required="">
+                <input id="lower-limit" name="lower-limit" type="number" placeholder="Lower price limit" class="form-control input-md" value="{{ currentProduct.lower_limit }}" required="">
             </div>
         </div>
         <div class="form-group">
-            <label class="col-md-4 control-label osv-label" for="limit">OSV</label>
+            <label class="col-md-4 control-label" for="p-status">Status</label>
             <div class="col-md-6">
-                <input id="osv" name="osv" type="checkbox" />
+                <select id="p-status" name="p-status" class="form-control">
+                    <option value="{{ currentProduct.status }}">{{ currentProduct.status }}</option>
+                    <option value="isv">Instock Verified</option>
+                    <option value="osv">Out Of Stock Verified</option>
+                    <option value="isuv">Instock Unverified</option>
+                    <option value="osuv">Out Of Stock Unverified</option>
+                </select>
             </div>
         </div>
         <div class="form-group">

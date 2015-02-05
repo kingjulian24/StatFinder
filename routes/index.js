@@ -18,6 +18,11 @@ router.get('/getProductsData', function(req, res) {
     res.jsonp(stats);
   }); 
 });
+router.get('/getHNWebpage', function(req, res) {
+  require('../api/getHNWebpage').crawl(req, function(stats){
+    res.send(stats);
+  }); 
+});
 
 
 router.post('/save', function(req,res){
@@ -27,11 +32,14 @@ router.post('/save', function(req,res){
     var data = {
       id         : req.param('id')           ,
       storeName  : req.param('store')        ,
-      upperLimit : req.param('upper-limit') ,
-      lowerLimit : req.param('lower-limit') ,
-      osv        : req.param('osv'),
+      upperLimit : parseInt(req.param('upper-limit'), 10) ,
+      lowerLimit : parseInt(req.param('lower-limit'), 10) ,
+      status     : req.param('p-status'),
       myPrice    : req.param('my-price')
     };
+
+    console.log('p-status');
+    console.log(data.status)
 
     // crawl and save data
     require('../api/'+data.storeName).crawl(data);

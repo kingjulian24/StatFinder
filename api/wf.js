@@ -62,7 +62,7 @@ exports.crawl = function (formData) {
         data.storeID    = storeID;
         data.upperLimit = formData.upperLimit;
         data.lowerLimit = formData.lowerLimit;
-        data.osv        = formData.osv || false;
+        data.status     = formData.status;
         data.title      = data.title || 'Not Available';
 
         save(data);

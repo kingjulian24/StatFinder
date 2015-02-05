@@ -27,19 +27,24 @@
         <div class="form-group">
             <label class="col-md-4 control-label" for="limit">Upper Limit</label>
             <div class="col-md-6">
-                <input id="upper-limit" name="upper-limit" type="text" placeholder="Upper price limit" class="form-control input-md"  required="">
+                <input id="upper-limit" name="upper-limit" type="number" placeholder="Upper price limit" class="form-control input-md"  required="">
             </div>
         </div>
         <div class="form-group">
             <label class="col-md-4 control-label" for="limit">Lower Limit</label>
             <div class="col-md-6">
-                <input id="lower-limit" name="lower-limit" type="text" placeholder="Lower price limit" class="form-control input-md" v required="">
+                <input id="lower-limit" name="lower-limit" type="number" placeholder="Lower price limit" class="form-control input-md" v required="">
             </div>
         </div>
         <div class="form-group">
-            <label class="col-md-4 control-label osv-label" for="limit">OSV</label>
+            <label class="col-md-4 control-label" for="p-status">Status</label>
             <div class="col-md-6">
-                <input id="osv" name="osv" type="checkbox" />
+                <select id="p-status" name="p-status" class="form-control">
+                    <option value="isv">Instock Verified</option>
+                    <option value="osv">Out Of Stock Verified</option>
+                    <option value="isuv">Instock Unverified</option>
+                    <option value="osuv">Out Of Stock Unverified</option>
+                </select>
             </div>
         </div>
         <div class="form-group">

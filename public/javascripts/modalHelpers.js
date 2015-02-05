@@ -1,6 +1,7 @@
-
+	var x = 0;
 	  // switch btns on modal
 	  exports.switchBtns = function  (type, $scope, $compile) {
+	  	console.log(x++);
 	  	if(type === 'editProduct') {
 	  		
 	  		$('.edit-btn').html('Back').
@@ -9,7 +10,7 @@
 	  			blur().
 	  			attr('ng-click', 'showModal(\'moreInfo\',currentProduct)').
 	  			after('<form  ng-click="sfSubmit()" action="/delete?id='+$scope.currentProduct._id+'" method="post" class="delete-form"  style="display:inline;" ><button type="submit" class="btn btn-danger delete-btn">Delete</button></form>');
-  				
+  			
   			$compile($('.back-btn'))($scope);
   			
   			// form confirmation

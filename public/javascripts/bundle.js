@@ -30,6 +30,7 @@ sf.controller('dashCtrl', ['$scope','$http','$filter','$compile', '$sce', functi
 		$scope.badProductsCount  = data.badProducts.length;
 		$scope.osvCount          = data.osv.length;
 		$scope.isuvCount         = data.isuv.length;
+		
 
 		$scope.productType 		 = 'badProducts';
 		$scope.defaultModalTitle = 'New';
@@ -211,9 +212,10 @@ sf.controller('loadingCtrl', ['$scope', function($scope){
 
 
 },{"./modalHelpers.js":"/Users/julianbrown/Desktop/StatFinder/public/javascripts/modalHelpers.js"}],"/Users/julianbrown/Desktop/StatFinder/public/javascripts/modalHelpers.js":[function(require,module,exports){
-
+	var x = 0;
 	  // switch btns on modal
 	  exports.switchBtns = function  (type, $scope, $compile) {
+	  	console.log(x++);
 	  	if(type === 'editProduct') {
 	  		
 	  		$('.edit-btn').html('Back').
@@ -222,7 +224,7 @@ sf.controller('loadingCtrl', ['$scope', function($scope){
 	  			blur().
 	  			attr('ng-click', 'showModal(\'moreInfo\',currentProduct)').
 	  			after('<form  ng-click="sfSubmit()" action="/delete?id='+$scope.currentProduct._id+'" method="post" class="delete-form"  style="display:inline;" ><button type="submit" class="btn btn-danger delete-btn">Delete</button></form>');
-  				
+  			
   			$compile($('.back-btn'))($scope);
   			
   			// form confirmation

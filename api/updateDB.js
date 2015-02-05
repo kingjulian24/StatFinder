@@ -29,10 +29,14 @@ db.view('queries/update', function  (err, res) {
   for (var i = 0 ; i < products.length; i++) {
 
     data = {
-      id        : products[i].id,
-      minProfit : products[i].value.minProfit,
-      storeID   : products[i].value.storeID,
-      myPrice   : products[i].value.myPrice
+      id         : products[i].id,
+      status     : products[i].value.status,
+      storeID    : products[i].value.storeID,
+      myPrice    : products[i].value.myPrice,
+      upperLimit : products[i].value.upper_limit,
+      lowerLimit : products[i].value.lower_limit
+
+
     };
 
     if( data.storeID === 'wm' ){

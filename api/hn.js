@@ -36,7 +36,7 @@ config = {
 };
 
 exports.crawl = function(formData){
-  
+
   requestOptions = {
     url : url = 'http://search.hayneedle.com/search/null.cfm?Ntt='+formData.id,
     headers: {
@@ -70,7 +70,7 @@ exports.crawl = function(formData){
     data.storeID     = storeID;
     data.upperLimit  = formData.upperLimit;
     data.lowerLimit  = formData.lowerLimit;
-    data.osv         = formData.osv || false;
+    data.status      = formData.status;
     data.title       = data.title  || 'Not Available';
 
     // save to couchdb

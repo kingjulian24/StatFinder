@@ -29,7 +29,7 @@
 			<td>{{ product.my_price | currency }}</td>
 			<td>{{ product.min_profit | currency}}</td>
 			<td><i class="{{ product.instock | sfcheck }}"></i></td>
-			<td><i class="{{ product.deviated | sfcheck }}"></i></td>
+			<td><i class="{{ product.deviated }}"></i></td>
 		</tr>
 	</tbody>
  </table>

@@ -29,6 +29,7 @@ sf.controller('dashCtrl', ['$scope','$http','$filter','$compile', '$sce', functi
 		$scope.badProductsCount  = data.badProducts.length;
 		$scope.osvCount          = data.osv.length;
 		$scope.isuvCount         = data.isuv.length;
+		
 
 		$scope.productType 		 = 'badProducts';
 		$scope.defaultModalTitle = 'New';
