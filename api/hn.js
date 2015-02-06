@@ -46,7 +46,7 @@ exports.crawl = function(formData, callback){
   };
 
   // request a page
-  request.get(requestOptions, function(err, res, body){
+  request.get(requestOptions, function( err, res, body ) {
 
       // handle error and non-200 response here
       if(err || (res.statusCode !== 200)){
@@ -60,6 +60,7 @@ exports.crawl = function(formData, callback){
       data.stock     = parseInt(data.storePrice, 10) > 0 ? true : false;
       data.storeID   = STORE_ID;
       data.storeName = STORE_NAME;
+     
       // merge crawl data and form data
       mergeData.init( data, formData, function( data ) {
         callback(data);

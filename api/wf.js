@@ -1,7 +1,7 @@
-var Parser, request, config, url, parser, data;
-var save = require('./save');
-var storeName = 'Wayfair',
-    storeID   = 'wf';
+var Parser, request, config, url;
+var mergeData   = require('./mergeData');
+var STORE_NAME = 'Wayfair',
+    STORE_ID   = 'wf';
 
 
 // npm dependencies
@@ -38,34 +38,29 @@ config = {
 };
 
 
-exports.crawl = function (formData) {
+exports.crawl = function (formData, callback) {
     url = 'http://www.wayfair.com/keyword.php?keyword=' + formData.id + '&ust=&command=dosearch&new_keyword_search=true';
 
     // request a page
     request.get(url, function (err, res, body) {
-        // handle error and non-200 response here
-        if (err || (res.statusCode !== 200)) {
-            return console.log('Wayfair request failed');
-        }
 
-        // parse body
-        parser          = new Parser(config);
-        data            = parser.parse(body);
+      // handle error and non-200 response here
+    if (err || (res.statusCode !== 200)) {
+        return console.log('Wayfair request failed');
+    }
 
-        data.id         = formData.id;
-        data.myPrice    = formData.myPrice;
-        data.storePrice = data.storePrice  || 'Not Available';
-        data.image      = data.image;
-        data.stock      = (data.stock === 'http://schema.org/InStock') > 0 ? true : false;
-        data.link       = data.link;
-        data.storeName  = storeName;
-        data.storeID    = storeID;
-        data.upperLimit = formData.upperLimit;
-        data.lowerLimit = formData.lowerLimit;
-        data.status     = formData.status;
-        data.title      = data.title || 'Not Available';
-
-        save(data);
+      var parser, data;
+      // parse body
+      parser         = new Parser(config);
+      data           = parser.parse(body);
+      data.stock     = (data.stock === 'http://schema.org/InStock') > 0 ? true : false;
+      data.storeID   = STORE_ID;
+      data.storeName = STORE_NAME;
+     
+      // merge crawl data and form data
+      mergeData.init( data, formData, function( data ) {
+        callback(data);
+      });
 
     });
 };
