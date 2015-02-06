@@ -1,9 +1,8 @@
 //'use strict';
 var Parser, request, config, url;
-var save = require('./save');
-var storeName = 'Hayneedle',
-    storeID   = 'hn';
-
+var mergeData   = require('./mergeData');
+var STORE_ID    = 'hn';
+var STORE_NAME  = 'Hayneedle';
 
 // npm dependencies
 Parser  = require("jq-html-parser");
@@ -11,6 +10,7 @@ request = require("request");
 
 // config, etc.
 config = {
+  
   storePrice: {
     selector: 'meta[property="og:price:amount"]',
     attribute: 'content'
@@ -35,8 +35,9 @@ config = {
 
 };
 
-exports.crawl = function(formData){
+exports.crawl = function(formData, callback){
 
+  // request options
   requestOptions = {
     url : url = 'http://search.hayneedle.com/search/null.cfm?Ntt='+formData.id,
     headers: {
@@ -44,39 +45,26 @@ exports.crawl = function(formData){
     }
   };
 
-
   // request a page
   request.get(requestOptions, function(err, res, body){
 
-    // handle error and non-200 response here
-    if(err || (res.statusCode !== 200)){
-      return console.log("Hayneedle request failed");
-    }
+      // handle error and non-200 response here
+      if(err || (res.statusCode !== 200)){
+        return console.log("Hayneedle request failed");
+      }
 
-  
-    //console.log(body);
-    var parser, data;
-
-    // parse body
-    parser         = new Parser(config);
-    data           = parser.parse(body);
-    data.id          = formData.id;
-    data.myPrice     = formData.myPrice;
-    data.storePrice  = data.storePrice  || 'Not Available';
-    data.image       = data.image;
-    data.stock       = parseInt(data.storePrice, 10) > 0 ? true : false;
-    data.link        = data.link;
-    data.storeName   = storeName;
-    data.storeID     = storeID;
-    data.upperLimit  = formData.upperLimit;
-    data.lowerLimit  = formData.lowerLimit;
-    data.status      = formData.status;
-    data.title       = data.title  || 'Not Available';
-
-    // save to couchdb
-    save(data);
-
-
-
+      var parser, data;
+      // parse body
+      parser         = new Parser(config);
+      data           = parser.parse(body);
+      data.stock     = parseInt(data.storePrice, 10) > 0 ? true : false;
+      data.storeID   = STORE_ID;
+      data.storeName = STORE_NAME;
+      // merge crawl data and form data
+      mergeData.init( data, formData, function( data ) {
+        callback(data);
+      });
+    
   });
+
 };

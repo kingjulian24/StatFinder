@@ -1,6 +1,7 @@
 
 var express        = require('express');
 var router         = express.Router();
+var crawlSave      = require('../api/crawlSave');
 
 /* GET home page. */
 router.get('/', function(req, res) {
@@ -18,6 +19,8 @@ router.get('/getProductsData', function(req, res) {
     res.jsonp(stats);
   }); 
 });
+
+// temp for sf1
 router.get('/getHNWebpage', function(req, res) {
   require('../api/getHNWebpage').crawl(req, function(stats){
     res.send(stats);
@@ -25,30 +28,17 @@ router.get('/getHNWebpage', function(req, res) {
 });
 
 
-router.post('/save', function(req,res){
+router.post('/save', function( req, res ){
   // authenticate user
   if (req.session.passport.user !== undefined) {
-
-    var data = {
-      id         : req.param('id')           ,
-      storeName  : req.param('store')        ,
-      upperLimit : parseInt(req.param('upper-limit'), 10) ,
-      lowerLimit : parseInt(req.param('lower-limit'), 10) ,
-      status     : req.param('p-status'),
-      myPrice    : req.param('my-price')
-    };
-
-    console.log('p-status');
-    console.log(data.status)
-
-    // crawl and save data
-    require('../api/'+data.storeName).crawl(data);
-
-    // redirect to home
-    req.method = 'get';
-    res.redirect('/?id='+data.id+'&action='+req.param('action'));
-
-  // redirect to login page
+    // craw and save data to db
+    crawlSave.init(req, function(data){
+      // redirect to dash board after data retrieval
+      req.method = 'get';
+      // add updated product and action to request param
+      res.redirect('/?id='+data.id+'&action='+data.action);
+    });
+  // if not logged in redirect to login page
   } else {
     res.redirect('/login');
   }
