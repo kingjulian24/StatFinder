@@ -29,7 +29,7 @@ router.get('/updateDB', function(req, res) {
     updateDB.update(function( err, response ){
       // send done
       if (!err){
-        res.json({len: response.length});
+        res.json({len: response.length, res: response});
       } else {
         res.json({error: 'error'});
       }

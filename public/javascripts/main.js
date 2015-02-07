@@ -208,6 +208,7 @@ sf.controller('dashCtrl', ['$scope','$http','$filter','$compile', '$sce', functi
 	  		// mimic time of loading
 	  		setTimeout(function(){
 	  			// remove loading
+	  			console.log(data);
 	  			$('.loading').addClass('ng-hide');
 	  		},timeLen);
 	  	});
