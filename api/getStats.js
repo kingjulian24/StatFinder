@@ -1,7 +1,7 @@
   var db = require('./db');
 
  exports.init = function (callback) {
-    db.view( 'queries/all' , function  (err, response) {
+    db.view( 'query/all' , function  (err, response) {
       
        var stats = {
             outOfStock   : [],
@@ -23,29 +23,30 @@
         for (var i = 0; i < products.length; i++) {
           stats.allProducts.push(products[i].value);
           // good products
-          if ( products[i].value.profit && products[i].value.instock && !products[i].value.osv ) {
+          if ( !products[i].value.deviated && products[i].value.instock && !products[i].value.osv ) {
             stats.goodProducts.push(products[i].value);
             continue;
           }
           // out of stock varified
-          if( products[i].value.osv && !products[i].value.instock){
+          if( products[i].value.status === 'osv' && !products[i].value.instock){
             stats.osv.push(products[i].value);
             continue;
           }
           // instock unvarified
-          if( products[i].value.osv && products[i].value.instock){
+          if( products[i].value.status === 'isuv' && products[i].value.instock){
             stats.isuv.push(products[i].value);
             continue;
           }
-          // profit loss
-          if(!products[i].value.deviated) {
+          // deviation
+          if(products[i].value.deviated && products[i].value.status === 'isv') {
             stats.deviated.push(products[i].value);
           }
           // out of stock
-          if( !products[i].value.instock && !products[i].value.osv ){
+          if( !products[i].value.instock && products[i].value.status === 'osuv' ){
             stats.outOfStock.push(products[i].value);
           }
-          if ( !products[i].value.profit || !products[i].value.instock ) {
+          // badProducts
+          if ( products[i].value.deviated || !products[i].value.instock && products[i].value.status === 'osuv' ) {
             stats.badProducts.push(products[i].value);
           }
 

@@ -1,9 +1,15 @@
 var db = require('./db');
+var saveToDB = require('./save');
 var wmData = [];
 var data;
 
 function crawl(data){
-  require('./'+data.storeID).crawl(data);
+  var crawler = require('./'+data.storeID);
+   crawler.crawl(data, function( data ){
+      // save data to db
+      saveToDB(data);
+    });
+
 }
 
 function wmCallback () {
@@ -11,7 +17,13 @@ function wmCallback () {
   // slow down for walmart
   var getWMData = function(i) {
     return function () {
-      require('./wm').crawl(wmData[i]);
+      var crawler = require('./wm');
+      crawler.crawl(wmData[i], function( data ){
+        // save data to db
+        saveToDB(data);
+      });
+      //console.log(wmData[i]);
+ 
     };
   };
 
@@ -22,31 +34,38 @@ function wmCallback () {
 
 }
 
-db.view('queries/update', function  (err, res) {
+exports.update = function (callback) {
+    db.view('query/all', function  (err, res) {
 
-  var products = res.rows;
+    var products = res.rows;
 
-  for (var i = 0 ; i < products.length; i++) {
+    for (var i = 0 ; i < products.length; i++) {
 
-    data = {
-      id         : products[i].id,
-      status     : products[i].value.status,
-      storeID    : products[i].value.storeID,
-      myPrice    : products[i].value.myPrice,
-      upperLimit : products[i].value.upper_limit,
-      lowerLimit : products[i].value.lower_limit
+      data = {
+        id         : products[i].id,
+        storeID    : products[i].value.store_id,
+        myPrice    : products[i].value.my_price,
+        status     : products[i].value.status,
+        //  upperLimit : 0,
+        // lowerLimit : 0
+        upperLimit : products[i].value.upper_limit,
+        lowerLimit : products[i].value.lower_limit
 
+      };
 
-    };
+      if( data.storeID === 'wm' ){
+        wmData.push(data);
+      } else {
+        crawl(data);
+      }
 
-    if( data.storeID === 'wm' ){
-      wmData.push(data);
-    } else {
-      crawl(data);
     }
+    // run walmart crawlers
+    wmCallback();
+    // run update
+    callback( err, res );
+  });
+  
+};
 
-  }
 
-  wmCallback();
-
-});

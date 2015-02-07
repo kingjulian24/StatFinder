@@ -5,7 +5,7 @@
       var mp = parseInt(mpR, 10);
       // limits
       var upperLimit = data.upperLimit + mp;
-      var lowerLimit = data.lowerLimit - mp;
+      var lowerLimit = mp - data.lowerLimit;
       return ( (sp > upperLimit) || (sp < lowerLimit) ) ? true : false;
     }
 
@@ -28,7 +28,7 @@
             deviated    : deviated(storeData.storePrice, formData.myPrice, formData),
             store_id    : storeData.storeID,
             timestamp   : new Date().getTime(),
-            status      : formData.status
+            status      : formData.status //storeData.stock ? 'isv' : 'osuv' //formData.status
         };
 
         callback(data);

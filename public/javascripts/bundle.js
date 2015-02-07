@@ -65,11 +65,18 @@ sf.controller('dashCtrl', ['$scope','$http','$filter','$compile', '$sce', functi
 	    // or server returns response with an error status.
 	    $scope.sfErrorMessage = "Error: Failed to retrieve product data.";
 	    $scope.sfError = true;
-	  });
+	  }); // end of http request
 
-		  
+		 
+
+	/* 
+	
+
+	================= Annyang Voice Commands ======================
+
+
+	*/	  
 	  // annyang voice commands
-
 	  var commands = {
 	  	'new product' : function(){
 	  		$scope.showModal('newProduct');
@@ -133,11 +140,10 @@ sf.controller('dashCtrl', ['$scope','$http','$filter','$compile', '$sce', functi
 	  };
 
 	  //save commands
-
 	  $scope.showCommands = false;
 	  $scope.commands = [];
 	  var i = 0;
-	  for(command in commands){
+	  for(var command in commands){
 	  	$scope.commands[i] = command;
 	  	i++;
 	  }
@@ -147,6 +153,14 @@ sf.controller('dashCtrl', ['$scope','$http','$filter','$compile', '$sce', functi
 		  annyang.debug([newState=true]);
 		  annyang.start();
 	   }
+
+	   /* 
+	
+
+	================= END OF Annyang Voice Commands ======================
+
+
+	*/	
 
 	  
 	  // show modal based on type
@@ -184,9 +198,23 @@ sf.controller('dashCtrl', ['$scope','$http','$filter','$compile', '$sce', functi
 
 	  };
 
+	  // update db
+	  $scope.updateDB = function () {
+	  	
+	  	$http.get('/updateDB').success(function(data){
+	  		// show loading
+	  		$('.loading').removeClass('ng-hide');
+	  		// 200 miliseconds per product
+	  		var timeLen = data.len * 200;
+	  		// mimic time of loading
+	  		setTimeout(function(){
+	  			// remove loading
+	  			$('.loading').addClass('ng-hide');
+	  		},timeLen);
+	  	});
+	  	
 
-
-
+	  };
 	  
 }]);
 

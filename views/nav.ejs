@@ -21,6 +21,11 @@
           <input type="text" class="form-control search" placeholder="Search" ng-model="$parent.searchText">
         </div>
       </form>
+      <ul class="nav navbar-nav">
+        <% if( loggedIn ) { %>
+          <li><a href="#" ng-click="updateDB()"><i class="fa fa-refresh"></i> Update DB</a></li>
+        <% } %>
+      </ul>
       <ul class="nav navbar-nav navbar-right">
         <% if(!loggedIn) {%>
         <li><a href="/login"><i class="fa fa-sign-in"></i> Login</a></li>

@@ -6,7 +6,7 @@ module.exports = function(data) {
       if (err){
         console.log('failed to save '+data.id);
       } else {
-        console.log('saved: '+data.storeName+', '+data.id);
+        console.log('saved: '+data.store_name+', '+data._id);
       }
   });
 };

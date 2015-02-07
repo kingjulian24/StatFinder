@@ -21,6 +21,7 @@ exports.crawl = function(formData, callback){
       data.stock      = data.availableOnline;
       data.link       = data.productUrl;
       data.title      = data.name || 'Not Available';
+      data.description = data.shortDescription;
 
 
       // merge crawl data and form data

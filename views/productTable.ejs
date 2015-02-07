@@ -1,12 +1,11 @@
 <!-- loading animation -->
-<div class="text-center" ng-show="loading"><img src="/images/loading.gif" alt=""></div>
+<div class="text-center loading" ng-show="loading"><img src="/images/loading.gif" alt=""></div>
 <div class="table-responsive">
 	<table class="table table-hover">
  	
  	<thead>
  		<tr>
  			<th>#</th>
- 			<!-- <th>Time</th> -->
  			<th><a href="" ng-click="reverse=!reverse;order('_id',reverse)" data-sortarrow data-reverse="false">			ID <i class="fa fa-sort"></i></a></th>
  			<th><a href="" ng-click="reverse=!reverse;order('store_name',reverse)" data-sortarrow data-reverse="false">		Store <i class="fa fa-sort"></i></a></th>
  			<th><a href="" ng-click="reverse=!reverse;order('title',reverse)" data-sortarrow data-reverse="fales">			Title <i class="fa fa-sort"></i></a></th>
@@ -14,14 +13,13 @@
  			<th><a href="" ng-click="reverse=!reverse;order('my_price',reverse)" data-sortarrow data-reverse="false">		My Price <i class="fa fa-sort"></i></a></th>
  			<!-- <th><a href="" ng-click="reverse=!reverse;order('min_profit',reverse)" data-sortarrow data-reverse="false">		Min Profit <i class="fa fa-sort"></i></a></th> -->
  			<th><a href="" ng-click="reverse=!reverse;order('instock',reverse)" data-sortarrow data-reverse="false">		Instock <i class="fa fa-sort"></i></a></th>
- 			<!-- <th><a href="" ng-click="reverse=!reverse;order('profit',reverse)" data-sortarrow data-reverse="false">			Deviated <i class="fa fa-sort"></i></a></th> -->
+ 			<th><a href="" ng-click="reverse=!reverse;order('deviated',reverse)" data-sortarrow data-reverse="false">			Not Deviated <i class="fa fa-sort"></i></a></th>
  		</tr>
  	</thead>
 
 	<tbody>
 		<tr ng-repeat="product in Products | filter:searchText " ng-click="showModal('moreInfo',product)">
 			<td>{{ $index + 1 }}</td>
-			<!-- <td>{{ product.timestamp | date:'medium' }}</td> -->
 			<td>{{ product._id }}</td>
 			<td>{{ product.store_name }}</td>
 			<td>{{ product.title | limitTo: 25 }}...</td>
@@ -29,7 +27,7 @@
 			<td>{{ product.my_price | currency }}</td>
 			<!-- <td>{{ product.min_profit | currency}}</td> -->
 			<td><i class="{{ product.instock | sfcheck }}"></i></td>
-			<!-- <td><i class="{{ product.deviated }}"></i></td> -->
+			<td><i class="{{ !product.deviated | sfcheck }}"></i></td>
 		</tr>
 	</tbody>
  </table>

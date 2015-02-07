@@ -2,6 +2,7 @@
 var express        = require('express');
 var router         = express.Router();
 var crawlSave      = require('../api/crawlSave');
+var updateDB       = require('../api/updateDB');
 
 /* GET home page. */
 router.get('/', function(req, res) {
@@ -18,6 +19,26 @@ router.get('/getProductsData', function(req, res) {
   require('../api/getStats').init(function(stats){
     res.jsonp(stats);
   }); 
+});
+
+// update db
+router.get('/updateDB', function(req, res) {
+  // authenticate user
+  if (req.session.passport.user !== undefined) {
+    // craw and save data to db
+    updateDB.update(function( err, response ){
+      // send done
+      if (!err){
+        res.json({len: response.length});
+      } else {
+        res.json({error: 'error'});
+      }
+      
+    });
+  // if not logged in redirect to login page
+  } else {
+    res.redirect('/login');
+  } 
 });
 
 // temp for sf1
