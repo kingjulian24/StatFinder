@@ -30,7 +30,7 @@ exports.crawl = function(formData, callback){
       });
 
     } else {
-      console.log('Walmart request failed');
+      console.log('Walmart request failed, id: '+ formData.id);
     }
   });
 };

@@ -50,7 +50,7 @@ exports.crawl = function(formData, callback){
 
       // handle error and non-200 response here
       if(err || (res.statusCode !== 200)){
-        return console.log("Hayneedle request failed");
+        return console.log('Hayneedle request failed, id: '+ formData.id);
       }
 
       var parser, data;

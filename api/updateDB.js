@@ -40,8 +40,6 @@ exports.update = function (callback) {
       if (!err) {
           
           var products = res.rows;
-          console.log('======================test');
-          console.log(products);
 
           for (var i = 0 ; i < products.length; i++) {
 
