@@ -36,30 +36,39 @@ function wmCallback () {
 
 exports.update = function (callback) {
     db.view('query/all', function  (err, res) {
+      
+      if (!err) {
+          
+          var products = res.rows;
+          console.log('======================test');
+          console.log(products);
 
-    var products = res.rows;
+          for (var i = 0 ; i < products.length; i++) {
 
-    for (var i = 0 ; i < products.length; i++) {
+            data = {
+              id         : products[i].id,
+              storeID    : products[i].value.store_id,
+              myPrice    : products[i].value.my_price,
+              status     : products[i].value.status,
+              //  upperLimit : 0,
+              // lowerLimit : 0
+              upperLimit : products[i].value.upper_limit,
+              lowerLimit : products[i].value.lower_limit
 
-      data = {
-        id         : products[i].id,
-        storeID    : products[i].value.store_id,
-        myPrice    : products[i].value.my_price,
-        status     : products[i].value.status,
-        //  upperLimit : 0,
-        // lowerLimit : 0
-        upperLimit : products[i].value.upper_limit,
-        lowerLimit : products[i].value.lower_limit
+            };
 
-      };
+            if( data.storeID === 'wm' ){
+              wmData.push(data);
+            } else {
+              crawl(data);
+            }
 
-      if( data.storeID === 'wm' ){
-        wmData.push(data);
+          } // end for
+
       } else {
-        crawl(data);
+        console.log('Error during quering the db');
       }
-
-    }
+    
     // run walmart crawlers
     wmCallback();
     // run update
