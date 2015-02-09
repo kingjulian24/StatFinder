@@ -55,11 +55,14 @@ exports.update = function (callback) {
 
             };
 
-            if( data.storeID === 'wm' ){
-              wmData.push(data);
-            } else {
+            if( data.storeID === 'hn' ){
               crawl(data);
-            }
+            } 
+            // if( data.storeID === 'wm' ){
+            //   wmData.push(data);
+            // } else {
+            //   crawl(data);
+            // }
 
           } // end for
 
@@ -68,7 +71,7 @@ exports.update = function (callback) {
       }
     
     // run walmart crawlers
-    wmCallback();
+    //wmCallback();
     // run update
     callback( err, res );
   });
