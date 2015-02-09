@@ -1,6 +1,5 @@
 var db = require('./db');
 var saveToDB = require('./save');
-var wmData = [];
 var data;
 
 function crawl(data){
@@ -9,69 +8,65 @@ function crawl(data){
       // save data to db
       saveToDB(data);
     });
-
 }
 
-function wmCallback () {
+function getCrawler (data) {
+  return function () { crawl(data); };
+}
 
-  // slow down for walmart
-  var getWMData = function(i) {
-    return function () {
-      var crawler = require('./wm');
-      crawler.crawl(wmData[i], function( data ){
-        // save data to db
-        saveToDB(data);
-      });
-      //console.log(wmData[i]);
- 
-    };
-  };
-
-  // make 5 wm calls per second
-  for (var i = 1; i <= wmData.length; i++) {
-    setTimeout(getWMData(i-1), 200 * i );
-  }
-
+function crawlSlow (data, x) {
+  return setTimeout( getCrawler(data) , x * 200 );
 }
 
 exports.update = function (callback) {
     db.view('query/all', function  (err, res) {
       
       if (!err) {
+        var wmCount = 0;
+        var hnCount = 0;
+        var wfCount = 0;
+        var currentCount = 0;
+
+        var products = res.rows;
+
+        for (var i = 0 ; i < products.length; i++) {
+
+          data = {
+            id         : products[i].id,
+            storeID    : products[i].value.store_id,
+            myPrice    : products[i].value.my_price,
+            status     : products[i].value.status,
+            upperLimit : products[i].value.upper_limit,
+            lowerLimit : products[i].value.lower_limit
+          };
+
+          // set current count
+          switch(data.storeID) {
+            case 'hn':
+              ++hnCount;
+              currentCount = hnCount;
+              break;
+            case 'wf':
+              ++wfCount;
+              currentCount = wfCount;
+              break;
+            case 'wm':
+              ++wmCount;
+              currentCount = wmCount;
+            break;
+          }
+
+          // crawl site using data
+            crawlSlow(data, currentCount);
           
-          var products = res.rows;
+          
 
-          for (var i = 0 ; i < products.length; i++) {
-
-            data = {
-              id         : products[i].id,
-              storeID    : products[i].value.store_id,
-              myPrice    : products[i].value.my_price,
-              status     : products[i].value.status,
-              //  upperLimit : 0,
-              // lowerLimit : 0
-              upperLimit : products[i].value.upper_limit,
-              lowerLimit : products[i].value.lower_limit
-
-            };
-
-            if( data.storeID === 'hn' ){
-              crawl(data);
-            } 
-            // if( data.storeID === 'wm' ){
-            //   wmData.push(data);
-            // } else {
-            //   crawl(data);
-            // }
-
-          } // end for
+        } // end for
 
       } else {
         console.log('Error during quering the db');
-      }
-    
-    // run walmart crawlers
-    //wmCallback();
+      } // end else
+
     // run update
     callback( err, res );
   });

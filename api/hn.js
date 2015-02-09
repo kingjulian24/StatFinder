@@ -45,34 +45,27 @@ exports.crawl = function(formData, callback){
     }
   };
 
-  // slow down request w/ set timeout
-  setTimeout( sendRequest, 200 );
-  
-  function sendRequest () {
-    /// request a page
-    request.get(requestOptions, function( err, res, body ) {
+  // request a page
+  request.get(requestOptions, function( err, res, body ) {
 
-        // handle error and non-200 response here
-        if(err || (res.statusCode !== 200)){
-          return console.log('Hayneedle request failed, id: '+ formData.id);
-        }
+      // handle error and non-200 response here
+      if(err || (res.statusCode !== 200)){
+        return console.log('Hayneedle request failed, id: '+ formData.id);
+      }
 
-        var parser, data;
-        // parse body
-        parser         = new Parser(config);
-        data           = parser.parse(body);
-        data.stock     = parseInt(data.storePrice, 10) > 0 ? true : false;
-        data.storeID   = STORE_ID;
-        data.storeName = STORE_NAME;
-       
-        // merge crawl data and form data
-        mergeData.init( data, formData, function( data ) {
-          callback(data);
-        });
-      
-    });
-
-  }
-  
+      var parser, data;
+      // parse body
+      parser         = new Parser(config);
+      data           = parser.parse(body);
+      data.stock     = parseInt(data.storePrice, 10) > 0 ? true : false;
+      data.storeID   = STORE_ID;
+      data.storeName = STORE_NAME;
+     
+      // merge crawl data and form data
+      mergeData.init( data, formData, function( data ) {
+        callback(data);
+      });
+    
+  });
 
 };

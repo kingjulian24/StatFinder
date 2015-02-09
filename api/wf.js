@@ -40,7 +40,7 @@ config = {
 
 exports.crawl = function (formData, callback) {
     url = 'http://www.wayfair.com/keyword.php?keyword=' + formData.id + '&ust=&command=dosearch&new_keyword_search=true';
-
+    
     // request a page
     request.get(url, function (err, res, body) {
 
