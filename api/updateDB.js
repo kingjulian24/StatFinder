@@ -15,7 +15,7 @@ function getCrawler (data) {
 }
 
 function crawlSlow (data, x) {
-  return setTimeout( getCrawler(data) , x * 200 );
+  return setTimeout( getCrawler(data) , x * 500 );
 }
 
 exports.update = function (callback) {
