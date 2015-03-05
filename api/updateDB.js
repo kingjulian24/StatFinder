@@ -1,6 +1,7 @@
 var db = require('./db');
 var saveToDB = require('./save');
 var data;
+
 var RateLimiter = require('limiter').RateLimiter;
 var limiter = new RateLimiter(1, 500);
  
@@ -18,6 +19,7 @@ function crawl(data){
       });
   });
 }
+
 
 
 function getCrawler (data) {
@@ -53,12 +55,14 @@ exports.update = function (callback) {
 
           crawl(data);
 
+
         } // end for
 
       } else {
         console.log('Error during quering the db');
       } // end else
       
+
     // run update
     callback( err, 'done: from update.js' );
   });
