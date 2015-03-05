@@ -1,17 +1,28 @@
 var db = require('./db');
 var saveToDB = require('./save');
 var data;
+var RateLimiter = require('limiter').RateLimiter;
+var limiter = new RateLimiter(1, 500);
+ 
+
+
+
 
 function crawl(data){
-  var crawler = require('./'+data.storeID);
-   crawler.crawl(data, function( data ){
-      // save data to db
-      saveToDB(data);
-    });
+  limiter.removeTokens(1, function() {
+    var crawler = require('./'+data.storeID);
+     crawler.crawl(data, function( data ){
+      console.log('----Retrieving '+ data.store_name +' Data.....');
+        // save data to db
+        saveToDB(data);
+      });
+  });
 }
 
+
 function getCrawler (data) {
-  return function () { crawl(data); };
+  return function () { 
+    crawl(data); };
 }
 
 function crawlSlow (data, x) {
@@ -40,35 +51,16 @@ exports.update = function (callback) {
             lowerLimit : products[i].value.lower_limit
           };
 
-          // set current count
-          switch(data.storeID) {
-            case 'hn':
-              ++hnCount;
-              currentCount = hnCount;
-              break;
-            case 'wf':
-              ++wfCount;
-              currentCount = wfCount;
-              break;
-            case 'wm':
-              ++wmCount;
-              currentCount = wmCount;
-            break;
-          }
-
-          // crawl site using data
-            crawlSlow(data, currentCount);
-          
-          
+          crawl(data);
 
         } // end for
 
       } else {
         console.log('Error during quering the db');
       } // end else
-
+      
     // run update
-    callback( err, res );
+    callback( err, 'done: from update.js' );
   });
   
 };
