@@ -41,8 +41,10 @@ config = {
 exports.crawl = function (formData, callback) {
     url = 'http://www.wayfair.com/keyword.php?keyword=' + formData.id + '&ust=&command=dosearch&new_keyword_search=true';
     
+    console.log('[PAGE REQUESTED wf]');
     // request a page
     request.get(url, function (err, res, body) {
+      console.log('[PAGE RECIEVED wf]');
 
       // handle error and non-200 response here
     if (err || (res.statusCode !== 200)) {
@@ -56,9 +58,10 @@ exports.crawl = function (formData, callback) {
       data.stock     = (data.stock === 'http://schema.org/InStock') > 0 ? true : false;
       data.storeID   = STORE_ID;
       data.storeName = STORE_NAME;
-     
+    
       // merge crawl data and form data
       mergeData.init( data, formData, function( data ) {
+        console.log('Merging '+ STORE_NAME +' Data.....');
         callback(data);
       });
 

@@ -1,13 +1,29 @@
 var db = require('./db');
 var saveToDB = require('./save');
 var data;
+var storeData = {
+  hn:[],
+  wm:[],
+  wf:[]
+};
+
 
 function crawl(data){
   var crawler = require('./'+data.storeID);
    crawler.crawl(data, function( data ){
+    console.log('----Retrieving '+ data.store_name +' Data.....');
       // save data to db
       saveToDB(data);
     });
+}
+
+//test crawl w/o walmart
+function dCrawl(id,data) {
+  require('./'+id).crawl(data, function( data ){
+    console.log('----Retrieving '+ data.store_name +' Data.....');
+      // save data to db
+      saveToDB(data);
+  });
 }
 
 function getCrawler (data) {
@@ -40,25 +56,21 @@ exports.update = function (callback) {
             lowerLimit : products[i].value.lower_limit
           };
 
-          // set current count
+          // populate arrays
           switch(data.storeID) {
             case 'hn':
-              ++hnCount;
-              currentCount = hnCount;
+              storeData.hn.push(data);
               break;
             case 'wf':
-              ++wfCount;
-              currentCount = wfCount;
+              storeData.wf.push(data);
               break;
             case 'wm':
-              ++wmCount;
-              currentCount = wmCount;
+              storeData.wm.push(data);
             break;
           }
 
           // crawl site using data
-            crawlSlow(data, currentCount);
-          
+            //crawlSlow(data, currentCount);
           
 
         } // end for
@@ -66,9 +78,22 @@ exports.update = function (callback) {
       } else {
         console.log('Error during quering the db');
       } // end else
+      for(var h = 0; h < storeData.hn.length; h++) {
+        //crawlSlow(storeData.wf[h], h+1);
+        dCrawl('wf',storeData.hn[h]);
+      }
+      for(var f = 0; f < storeData.wf.length; f++) {
+        //crawlSlow(storeData.wf[h], h+1);
+        dCrawl('wf',storeData.wf[f]);
+      }
+      for(var m = 0; m < storeData.wm.length; m++) {
+        crawlSlow(storeData.wm[m], m+1);
+      }
+      
+      
 
     // run update
-    callback( err, res );
+    callback( err, 'done: from update.js' );
   });
   
 };

@@ -16,6 +16,7 @@ exports.init = function ( req, callback ) {
     // retrieve data
     var crawler = require('./'+data.storeName);
     crawler.crawl(data, function( data ){
+      console.log('Retrieving '+ data.storeName +' Data.....');
     	// save data to db
     	saveToDB(data);
     });

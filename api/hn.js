@@ -46,7 +46,9 @@ exports.crawl = function(formData, callback){
   };
 
   // request a page
+  console.log('[PAGE REQUESTED hn]');
   request.get(requestOptions, function( err, res, body ) {
+    console.log('[PAGE RECIEVED hn]');
 
       // handle error and non-200 response here
       if(err || (res.statusCode !== 200)){
@@ -63,6 +65,7 @@ exports.crawl = function(formData, callback){
      
       // merge crawl data and form data
       mergeData.init( data, formData, function( data ) {
+         console.log('Merging '+ STORE_NAME +' Data.....');
         callback(data);
       });
     

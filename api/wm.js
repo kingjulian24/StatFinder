@@ -10,8 +10,9 @@ var STORE_NAME = 'Walmart',
 exports.crawl = function(formData, callback){
   url = 'http://walmartlabs.api.mashery.com/v1/items/'+formData.id+'?format=json&apiKey='+key;
 
-
+     console.log('[PAGE REQUESTED wm]');
     request(url, function (error, response, body) {
+      console.log('[PAGE RECIEVED wm]');
       if (!error && response.statusCode === 200) {
         var data;
         data            = JSON.parse(body); 
@@ -25,9 +26,9 @@ exports.crawl = function(formData, callback){
         data.title      = data.name || 'Not Available';
         data.description = data.shortDescription;
 
-
         // merge crawl data and form data
         mergeData.init( data, formData, function( data ) {
+           console.log('Merging '+ STORE_NAME +' Data.....');
           callback(data);
         });
 
