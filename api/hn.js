@@ -1,74 +1,42 @@
-//'use strict';
-var Parser, request, config, url;
-var mergeData   = require('./mergeData');
-var STORE_ID    = 'hn';
-var STORE_NAME  = 'Hayneedle';
+var data,
+  req = require('request'),
+  Parser  = require("jq-html-parser");
 
-// npm dependencies
-Parser  = require("jq-html-parser");
-request = require("request");
-
-// config, etc.
-config = {
-  
-  storePrice: {
-    selector: 'meta[property="og:price:amount"]',
-    attribute: 'content'
-  },
-  title: {
-    selector: 'meta[property="og:title"]',
-    attribute: 'content'
-  },
-  link: {
-    selector: 'meta[property="og:url"]',
-    attribute: 'content'
-  },
-  image: {
-    selector: 'meta[property="og:image"]',
-    attribute: 'content'
-  },
-  description: {
-    selector: 'meta[property="og:description"]',
-    attribute: 'content'
-  }
-
-
+var parseData = function (sid, body) {
+  var parserConfig = require('./parserConfig')(sid);
+  parser         = new Parser(parserConfig);
+  data           = parser.parse(body);
+  data.stock     = parseInt(data.storePrice, 10) > 0 ? true : false;
+  data.storeID   = sid;
+  data.storeName = 'Hayneedle';
+  return data;
 };
 
-exports.crawl = function(formData, callback){
-
-  // request options
-  requestOptions = {
-    url : url = 'http://search.hayneedle.com/search/null.cfm?Ntt='+formData.id,
+var getReqOptions = function(id) {
+  var reqOptions = {
+    url: 'http://search.hayneedle.com/search/null.cfm?Ntt=' + id,
     headers: {
-        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.93 Safari/537.36'
-    }
-  };
-
-  // request a page
-  console.log('[PAGE REQUESTED hn]');
-  request.get(requestOptions, function( err, res, body ) {
-    console.log('[PAGE RECIEVED hn]');
-
-      // handle error and non-200 response here
-      if(err || (res.statusCode !== 200)){
-        return console.log('Hayneedle request failed, id: '+ formData.id);
+          'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.93 Safari/537.36'
       }
-
-      var parser, data;
-      // parse body
-      parser         = new Parser(config);
-      data           = parser.parse(body);
-      data.stock     = parseInt(data.storePrice, 10) > 0 ? true : false;
-      data.storeID   = STORE_ID;
-      data.storeName = STORE_NAME;
-     
-      // merge crawl data and form data
-      mergeData.init( data, formData, function( data ) {
-         console.log('Merging '+ STORE_NAME +' Data.....');
-        callback(data);
-      });
-    
-  });
-
+  };
+  return reqOptions;
 };
+
+exports.sendRequest =  function(config,cb) {
+  var reqOptions = getReqOptions(config.id);
+
+  req.get(reqOptions, function(err, res, body){
+     if(!err && res.statusCode === 200) {
+       cb({
+          error : false,
+          data  : parseData(config.sid, body)
+       });
+     } else {
+        cb({
+          error : true,
+          data  : {}
+       });
+     }
+  });
+};
+

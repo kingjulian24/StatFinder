@@ -48,6 +48,18 @@ router.get('/getHNWebpage', function(req, res) {
   }); 
 });
 
+router.get('/crawl', function(req, res) {
+  var crawlCtrl = require('../api/crawlers/crawlerController');
+  crawlCtrl.init(req);
+  crawlCtrl.sendRequest(function(data){
+    if(!data.error) {
+      res.json(data.data);
+    } else {
+      res.json({status: 'error'});
+    }
+  });
+});
+
 
 router.post('/save', function( req, res ){
   // authenticate user
